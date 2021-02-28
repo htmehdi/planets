@@ -1,0 +1,2232 @@
+!- Windows Line endings 
+
+Version,
+    8.9;                      !- Version Identifier
+
+SimulationControl,
+    No,                       !- Do Zone Sizing Calculation
+    No,                       !- Do System Sizing Calculation
+    No,                       !- Do Plant Sizing Calculation
+    No,                       !- Run Simulation for Sizing Periods
+    Yes,                      !- Run Simulation for Weather File Run Periods
+    No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+    1;                        !- Maximum Number of HVAC Sizing Simulation Passes
+
+Building,
+    office,                   !- Name
+    270,                      !- North Axis
+    City,                     !- Terrain
+    0.04,                     !- Loads Convergence Tolerance Value
+    0.4,                      !- Temperature Convergence Tolerance Value
+    FullInteriorAndExteriorWithReflections,    !- Solar Distribution
+    25,                       !- Maximum Number of Warmup Days
+    6;                        !- Minimum Number of Warmup Days
+
+ShadowCalculation,
+    AverageOverDaysInFrequency,    !- Calculation Method
+    7,                        !- Calculation Frequency
+    15000,                    !- Maximum Figures in Shadow Overlap Calculations
+    SutherlandHodgman,        !- Polygon Clipping Algorithm
+    SimpleSkyDiffuseModeling;    !- Sky Diffuse Modeling Algorithm
+
+SurfaceConvectionAlgorithm:Inside,
+    TARP;                     !- Algorithm
+
+SurfaceConvectionAlgorithm:Outside,
+    DOE-2;                    !- Algorithm
+
+HeatBalanceAlgorithm,
+    ConductionTransferFunction,    !- Algorithm
+    200,                      !- Surface Temperature Upper Limit
+    0.1,                      !- Minimum Surface Convection Heat Transfer Coefficient Value
+    1000;                     !- Maximum Surface Convection Heat Transfer Coefficient Value
+
+HeatBalanceSettings:ConductionFiniteDifference,
+    CrankNicholsonSecondOrder,    !- Difference Scheme
+    3,                        !- Space Discretization Constant
+    1,                        !- Relaxation Factor
+    0.002;                    !- Inside Face Surface Temperature Convergence Criteria
+
+ZoneAirHeatBalanceAlgorithm,
+    ThirdOrderBackwardDifference;    !- Algorithm
+
+Timestep,
+    12;                       !- Number of Timesteps per Hour
+
+ConvergenceLimits,
+    1;                        !- Minimum System Timestep
+
+Site:Location,
+    Montreal Jean Brebeuf_PQ_CAN Design_Conditions,    !- Name
+    45.5,                     !- Latitude
+    -73.62,                   !- Longitude
+    -5,                       !- Time Zone
+    133;                      !- Elevation
+
+SizingPeriod:WeatherFileDays,
+    summer design day,        !- Name
+    7,                        !- Begin Month
+    1,                        !- Begin Day of Month
+    7,                        !- End Month
+    30,                       !- End Day of Month
+    Monday,                   !- Day of Week for Start Day
+    Yes,                      !- Use Weather File Daylight Saving Period
+    Yes;                      !- Use Weather File Rain and Snow Indicators
+
+SizingPeriod:WeatherFileDays,
+    winter design day,        !- Name
+    1,                        !- Begin Month
+    1,                        !- Begin Day of Month
+    1,                        !- End Month
+    31,                       !- End Day of Month
+    Wednesday,                !- Day of Week for Start Day
+    Yes,                      !- Use Weather File Daylight Saving Period
+    Yes;                      !- Use Weather File Rain and Snow Indicators
+
+RunPeriod,
+    Run Period 1,             !- Name
+    1,                        !- Begin Month
+    1,                        !- Begin Day of Month
+    12,                       !- End Month
+    31,                       !- End Day of Month
+    Tuesday,                  !- Day of Week for Start Day
+    Yes,                      !- Use Weather File Holidays and Special Days
+    Yes,                      !- Use Weather File Daylight Saving Period
+    No,                       !- Apply Weekend Holiday Rule
+    Yes,                      !- Use Weather File Rain Indicators
+    Yes,                      !- Use Weather File Snow Indicators
+    1,                        !- Number of Times Runperiod to be Repeated
+    Yes,                      !- Increment Day of Week on repeat
+    2019;                     !- Start Year
+
+RunPeriodControl:DaylightSavingTime,
+    3/8,                      !- Start Date
+    11/1;                     !- End Date
+
+Site:GroundTemperature:BuildingSurface,
+    18,                       !- January Ground Temperature
+    18,                       !- February Ground Temperature
+    18,                       !- March Ground Temperature
+    18,                       !- April Ground Temperature
+    18,                       !- May Ground Temperature
+    18,                       !- June Ground Temperature
+    18,                       !- July Ground Temperature
+    18,                       !- August Ground Temperature
+    18,                       !- September Ground Temperature
+    18,                       !- October Ground Temperature
+    18,                       !- November Ground Temperature
+    18;                       !- December Ground Temperature
+
+ScheduleTypeLimits,
+    On/off,                   !- Name
+    0,                        !- Lower Limit Value
+    1,                        !- Upper Limit Value
+    Discrete,                 !- Numeric Type
+    Dimensionless;            !- Unit Type
+
+ScheduleTypeLimits,
+    Fraction,                 !- Name
+    0,                        !- Lower Limit Value
+    1,                        !- Upper Limit Value
+    Continuous,               !- Numeric Type
+    Dimensionless;            !- Unit Type
+
+ScheduleTypeLimits,
+    Any number,               !- Name
+    ,                         !- Lower Limit Value
+    ,                         !- Upper Limit Value
+    Continuous,               !- Numeric Type
+    Dimensionless;            !- Unit Type
+
+ScheduleTypeLimits,
+    ActivityLevel 13,         !- Name
+    0,                        !- Lower Limit Value
+    ,                         !- Upper Limit Value
+    Continuous,               !- Numeric Type
+    activitylevel;            !- Unit Type
+
+Schedule:Day:Interval,
+    Small Office Infil Quarter On Default Schedule,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    06:00,                    !- Time 1
+    1,                        !- Value Until Time 1
+    22:00,                    !- Time 2
+    0.25,                     !- Value Until Time 2
+    24:00,                    !- Time 3
+    1;                        !- Value Until Time 3
+
+Schedule:Day:Interval,
+    Small Office Infil Quarter On Rule 1 Day Schedule,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    1;                        !- Value Until Time 1
+
+Schedule:Day:Interval,
+    Small Office Infil Quarter On Rule 2 Day Schedule,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    06:00,                    !- Time 1
+    1,                        !- Value Until Time 1
+    18:00,                    !- Time 2
+    0.25,                     !- Value Until Time 2
+    24:00,                    !- Time 3
+    1;                        !- Value Until Time 3
+
+Schedule:Day:Interval,
+    Small Office Infil Quarter On Summer Design Day,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    06:00,                    !- Time 1
+    1,                        !- Value Until Time 1
+    22:00,                    !- Time 2
+    0.25,                     !- Value Until Time 2
+    24:00,                    !- Time 3
+    1;                        !- Value Until Time 3
+
+Schedule:Day:Interval,
+    Small Office Infil Quarter On Winter Design Day,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    06:00,                    !- Time 1
+    1,                        !- Value Until Time 1
+    18:00,                    !- Time 2
+    0.25,                     !- Value Until Time 2
+    24:00,                    !- Time 3
+    1;                        !- Value Until Time 3
+
+Schedule:Day:Interval,
+    Small Office Bldg Equip Default Schedule,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    08:00,                    !- Time 1
+    0.4,                      !- Value Until Time 1
+    12:00,                    !- Time 2
+    0.9,                      !- Value Until Time 2
+    13:00,                    !- Time 3
+    0.8,                      !- Value Until Time 3
+    17:00,                    !- Time 4
+    0.9,                      !- Value Until Time 4
+    18:00,                    !- Time 5
+    0.5,                      !- Value Until Time 5
+    24:00,                    !- Time 6
+    0.4;                      !- Value Until Time 6
+
+Schedule:Day:Interval,
+    Small Office Bldg Equip Rule 1 Day Schedule,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    0.3;                      !- Value Until Time 1
+
+Schedule:Day:Interval,
+    Small Office Bldg Equip Rule 2 Day Schedule,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    06:00,                    !- Time 1
+    0.3,                      !- Value Until Time 1
+    08:00,                    !- Time 2
+    0.4,                      !- Value Until Time 2
+    12:00,                    !- Time 3
+    0.5,                      !- Value Until Time 3
+    17:00,                    !- Time 4
+    0.35,                     !- Value Until Time 4
+    24:00,                    !- Time 5
+    0.3;                      !- Value Until Time 5
+
+Schedule:Day:Interval,
+    Small Office Bldg Equip Summer Design Day,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    1;                        !- Value Until Time 1
+
+Schedule:Day:Interval,
+    Small Office Bldg Equip Winter Design Day,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    0;                        !- Value Until Time 1
+
+Schedule:Day:Interval,
+    Medium Office Activity Default Schedule,    !- Name
+    ActivityLevel 13,         !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    120;                      !- Value Until Time 1
+
+Schedule:Day:Interval,
+    Medium Office Activity Summer Design Day,    !- Name
+    ActivityLevel 13,         !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    120;                      !- Value Until Time 1
+
+Schedule:Day:Interval,
+    Medium Office Activity Winter Design Day,    !- Name
+    ActivityLevel 13,         !- Schedule Type Limits Name
+    No,                       !- Interpolate to Timestep
+    24:00,                    !- Time 1
+    120;                      !- Value Until Time 1
+
+Schedule:Week:Daily,
+    Schedule:Week:Daily {67d02dd5-67f4-4a2d-ae12-e57344ac7edd},    !- Name
+    Small Office Infil Quarter On Rule 1 Day Schedule,    !- Sunday ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- Monday ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- Tuesday ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- Wednesday ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- Thursday ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- Friday ScheduleDay Name
+    Small Office Infil Quarter On Rule 2 Day Schedule,    !- Saturday ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- Holiday ScheduleDay Name
+    Small Office Infil Quarter On Summer Design Day,    !- SummerDesignDay ScheduleDay Name
+    Small Office Infil Quarter On Winter Design Day,    !- WinterDesignDay ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule,    !- CustomDay1 ScheduleDay Name
+    Small Office Infil Quarter On Default Schedule;    !- CustomDay2 ScheduleDay Name
+
+Schedule:Week:Daily,
+    Schedule:Week:Daily {558d202e-ea46-4941-957c-cedda8e6d9ec},    !- Name
+    Small Office Bldg Equip Rule 1 Day Schedule,    !- Sunday ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- Monday ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- Tuesday ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- Wednesday ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- Thursday ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- Friday ScheduleDay Name
+    Small Office Bldg Equip Rule 2 Day Schedule,    !- Saturday ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- Holiday ScheduleDay Name
+    Small Office Bldg Equip Summer Design Day,    !- SummerDesignDay ScheduleDay Name
+    Small Office Bldg Equip Winter Design Day,    !- WinterDesignDay ScheduleDay Name
+    Small Office Bldg Equip Default Schedule,    !- CustomDay1 ScheduleDay Name
+    Small Office Bldg Equip Default Schedule;    !- CustomDay2 ScheduleDay Name
+
+Schedule:Week:Daily,
+    Schedule:Week:Daily {f0e1f6c9-0e47-4752-9d27-d525e3f268f7},    !- Name
+    Medium Office Activity Default Schedule,    !- Sunday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Monday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Tuesday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Wednesday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Thursday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Friday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Saturday ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- Holiday ScheduleDay Name
+    Medium Office Activity Summer Design Day,    !- SummerDesignDay ScheduleDay Name
+    Medium Office Activity Winter Design Day,    !- WinterDesignDay ScheduleDay Name
+    Medium Office Activity Default Schedule,    !- CustomDay1 ScheduleDay Name
+    Medium Office Activity Default Schedule;    !- CustomDay2 ScheduleDay Name
+
+Schedule:Year,
+    Small Office Infil Quarter On,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Schedule:Week:Daily {67d02dd5-67f4-4a2d-ae12-e57344ac7edd},    !- ScheduleWeek Name 1
+    1,                        !- Start Month 1
+    1,                        !- Start Day 1
+    12,                       !- End Month 1
+    31;                       !- End Day 1
+
+Schedule:Year,
+    Small Office Bldg Equip,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Schedule:Week:Daily {558d202e-ea46-4941-957c-cedda8e6d9ec},    !- ScheduleWeek Name 1
+    1,                        !- Start Month 1
+    1,                        !- Start Day 1
+    12,                       !- End Month 1
+    31;                       !- End Day 1
+
+Schedule:Year,
+    Medium Office Activity,    !- Name
+    ActivityLevel 13,         !- Schedule Type Limits Name
+    Schedule:Week:Daily {f0e1f6c9-0e47-4752-9d27-d525e3f268f7},    !- ScheduleWeek Name 1
+    1,                        !- Start Month 1
+    1,                        !- Start Day 1
+    12,                       !- End Month 1
+    31;                       !- End Day 1
+
+Schedule:Compact,
+    Always on,                !- Name
+    On/off,                   !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    1;                        !- Field 4
+
+Schedule:Compact,
+    Always off,               !- Name
+    On/off,                   !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    0;                        !- Field 4
+
+Schedule:Compact,
+    Clothing level,           !- Name
+    Any number,               !- Schedule Type Limits Name
+    Through: 03/01,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    1,                        !- Field 4
+    Through: 10/01,           !- Field 5
+    For: AllDays,             !- Field 6
+    Until: 24:00,             !- Field 7
+    .5,                       !- Field 8
+    Through: 12/31,           !- Field 9
+    For: AllDays,             !- Field 10
+    Until: 24:00,             !- Field 11
+    1;                        !- Field 12
+
+Schedule:Compact,
+    Cooling_SCH,              !- Name
+    Any number,               !- Schedule Type Limits Name
+    Through: 05/01,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    0,                        !- Field 4
+    Through: 10/01,           !- Field 5
+    For: AllDays,             !- Field 6
+    Until: 24:00,             !- Field 7
+    1,                        !- Field 8
+    Through: 12/31,           !- Field 9
+    For: AllDays,             !- Field 10
+    Until: 24:00,             !- Field 11
+    0;                        !- Field 12
+
+Schedule:Compact,
+    Heating_SCH,              !- Name
+    Any number,               !- Schedule Type Limits Name
+    Through: 05/01,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    1,                        !- Field 4
+    Through: 10/01,           !- Field 5
+    For: AllDays,             !- Field 6
+    Until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    Through: 12/31,           !- Field 9
+    For: AllDays,             !- Field 10
+    Until: 24:00,             !- Field 11
+    1;                        !- Field 12
+
+Schedule:Compact,
+    Office spaces_Occupancy,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 31 Dec,          !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 06:00,             !- Field 3
+    0,                        !- Field 4
+    Until: 07:00,             !- Field 5
+    0.1,                      !- Field 6
+    Until: 08:00,             !- Field 7
+    .7,                       !- Field 8
+    Until: 11:00,             !- Field 9
+    .9,                       !- Field 10
+    Until: 13:00,             !- Field 11
+    0.5,                      !- Field 12
+    Until: 16:00,             !- Field 13
+    .9,                       !- Field 14
+    Until: 17:00,             !- Field 15
+    0.7,                      !- Field 16
+    Until: 18:00,             !- Field 17
+    .3,                       !- Field 18
+    Until: 22:00,             !- Field 19
+    .1,                       !- Field 20
+    Until: 24:00,             !- Field 21
+    0,                        !- Field 22
+    For: Sunday Holidays,     !- Field 23
+    Until: 24:00,             !- Field 24
+    0,                        !- Field 25
+    For: CustomDay1 CustomDay2,    !- Field 26
+    Until: 24:00,             !- Field 27
+    0,                        !- Field 28
+    For: Saturday,            !- Field 29
+    Until: 06:00,             !- Field 30
+    0,                        !- Field 31
+    Until: 08:00,             !- Field 32
+    0,                        !- Field 33
+    Until: 14:00,             !- Field 34
+    0,                        !- Field 35
+    Until: 17:00,             !- Field 36
+    0,                        !- Field 37
+    Until: 24:00,             !- Field 38
+    0,                        !- Field 39
+    For: SummerDesignDay,     !- Field 40
+    Until: 06:00,             !- Field 41
+    0,                        !- Field 42
+    Until: 22:00,             !- Field 43
+    1,                        !- Field 44
+    Until: 24:00,             !- Field 45
+    .05,                      !- Field 46
+    For: WinterDesignDay,     !- Field 47
+    Until: 24:00,             !- Field 48
+    0;                        !- Field 49
+
+Schedule:Compact,
+    Office spaces_Plug loads,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 31 Dec,          !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 06:00,             !- Field 3
+    .2,                       !- Field 4
+    Until: 7:00,              !- Field 5
+    .3,                       !- Field 6
+    Until: 8:00,              !- Field 7
+    .8,                       !- Field 8
+    Until: 17:00,             !- Field 9
+    .9,                       !- Field 10
+    Until: 18:00,             !- Field 11
+    .5,                       !- Field 12
+    Until: 20:00,             !- Field 13
+    .3,                       !- Field 14
+    Until: 24:00,             !- Field 15
+    .2,                       !- Field 16
+    For: Sunday Holidays,     !- Field 17
+    Until: 24:00,             !- Field 18
+    .2,                       !- Field 19
+    For: Saturday,            !- Field 20
+    Until: 24:00,             !- Field 21
+    .2,                       !- Field 22
+    For: CustomDay1 CustomDay2,    !- Field 23
+    Until: 24:00,             !- Field 24
+    .3,                       !- Field 25
+    For: SummerDesignDay,     !- Field 26
+    Until: 24:00,             !- Field 27
+    1,                        !- Field 28
+    For: WinterDesignDay,     !- Field 29
+    Until: 24:00,             !- Field 30
+    0;                        !- Field 31
+
+Schedule:Compact,
+    Office spaces_Lighting,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 31 Dec,          !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 06:00,             !- Field 3
+    0.05,                     !- Field 4
+    Until: 07:00,             !- Field 5
+    .3,                       !- Field 6
+    Until: 08:00,             !- Field 7
+    .8,                       !- Field 8
+    Until: 16:00,             !- Field 9
+    0.9,                      !- Field 10
+    Until: 17:00,             !- Field 11
+    .8,                       !- Field 12
+    Until: 18:00,             !- Field 13
+    0.5,                      !- Field 14
+    Until: 20:00,             !- Field 15
+    0.3,                      !- Field 16
+    Until: 22:00,             !- Field 17
+    0.1,                      !- Field 18
+    Until: 24:00,             !- Field 19
+    .05,                      !- Field 20
+    For: Sunday Holidays,     !- Field 21
+    Until: 24:00,             !- Field 22
+    .05,                      !- Field 23
+    For: CustomDay1 CustomDay2,    !- Field 24
+    Until: 24:00,             !- Field 25
+    .05,                      !- Field 26
+    For: Saturday,            !- Field 27
+    Until: 05:00,             !- Field 28
+    .05,                      !- Field 29
+    Until: 07:00,             !- Field 30
+    .05,                      !- Field 31
+    Until: 08:00,             !- Field 32
+    .05,                      !- Field 33
+    Until: 14:00,             !- Field 34
+    .05,                      !- Field 35
+    Until: 17:00,             !- Field 36
+    .05,                      !- Field 37
+    Until: 24:00,             !- Field 38
+    .05,                      !- Field 39
+    For: SummerDesignDay,     !- Field 40
+    Until: 24:00,             !- Field 41
+    1,                        !- Field 42
+    For: WinterDesignDay,     !- Field 43
+    Until: 24:00,             !- Field 44
+    0;                        !- Field 45
+
+Schedule:Constant,
+    shadingSCH1,              !- Name
+    on/off,                   !- Schedule Type Limits Name
+    0;                        !- Hourly Value
+
+Schedule:Constant,
+    lightactuatorSCH,         !- Name
+    on/off,                   !- Schedule Type Limits Name
+    0;                        !- Hourly Value
+
+Schedule:Constant,
+    activityleveloffice,      !- Name
+    any number,               !- Schedule Type Limits Name
+    130;                      !- Hourly Value
+
+Schedule:Constant,
+    Always On Discrete,       !- Name
+    on/off,                   !- Schedule Type Limits Name
+    1;                        !- Hourly Value
+
+Schedule:Constant,
+    Always Off Discrete,      !- Name
+    on/off,                   !- Schedule Type Limits Name
+    0;                        !- Hourly Value
+
+Schedule:Constant,
+    Always On Continuous,     !- Name
+    any number,               !- Schedule Type Limits Name
+    1;                        !- Hourly Value
+
+Schedule:Constant,
+    OCCactuatorSCH,           !- Name
+    on/off,                   !- Schedule Type Limits Name
+    0;                        !- Hourly Value
+
+Schedule:Constant,
+    H_SPSCH,                  !- Name
+    any number,               !- Schedule Type Limits Name
+    1;                        !- Hourly Value
+
+Schedule:Constant,
+    C_SPSCH,                  !- Name
+    any number,               !- Schedule Type Limits Name
+    1;                        !- Hourly Value
+
+Material,
+    000_M11 100mm lightweight concrete,    !- Name
+    MediumRough,              !- Roughness
+    0.1016,                   !- Thickness
+    0.53,                     !- Conductivity
+    1280,                     !- Density
+    840,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.8;                      !- Visible Absorptance
+
+Material,
+    Roof Membrane,            !- Name
+    VeryRough,                !- Roughness
+    0.0095,                   !- Thickness
+    0.16,                     !- Conductivity
+    1121.29,                  !- Density
+    1460,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    000_G01a 19mm gypsum board,    !- Name
+    MediumSmooth,             !- Roughness
+    0.019,                    !- Thickness
+    0.16,                     !- Conductivity
+    800,                      !- Density
+    1090,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.5;                      !- Visible Absorptance
+
+Material,
+    MAT-CC05 4 HW CONCRETE,    !- Name
+    Rough,                    !- Roughness
+    0.1016,                   !- Thickness
+    1.311,                    !- Conductivity
+    2240,                     !- Density
+    836.8,                    !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    000_F08 Metal surface,    !- Name
+    Smooth,                   !- Roughness
+    0.0008,                   !- Thickness
+    45.28,                    !- Conductivity
+    7824,                     !- Density
+    500,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    000_F16 Acoustic tile roof,    !- Name
+    MediumSmooth,             !- Roughness
+    0.65,                     !- Thickness
+    0.1,                      !- Conductivity
+    368,                      !- Density
+    590,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.2;                      !- Visible Absorptance
+
+Material,
+    1/2IN Gypsum,             !- Name
+    Smooth,                   !- Roughness
+    0.5,                      !- Thickness
+    0.1,                      !- Conductivity
+    784.9,                    !- Density
+    830,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.92,                     !- Solar Absorptance
+    0.5;                      !- Visible Absorptance
+
+Material,
+    Roof Insulation [21],     !- Name
+    MediumRough,              !- Roughness
+    0.2105,                   !- Thickness
+    0.049,                    !- Conductivity
+    265,                      !- Density
+    836.8,                    !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    000_I01 25mm insulation board,    !- Name
+    MediumRough,              !- Roughness
+    0.0254,                   !- Thickness
+    0.03,                     !- Conductivity
+    43,                       !- Density
+    1210,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    Metal Decking,            !- Name
+    MediumSmooth,             !- Roughness
+    0.0015,                   !- Thickness
+    45.006,                   !- Conductivity
+    7680,                     !- Density
+    418.4,                    !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.3;                      !- Visible Absorptance
+
+Material,
+    000_G05 25mm wood,        !- Name
+    MediumSmooth,             !- Roughness
+    0.0254,                   !- Thickness
+    0.15,                     !- Conductivity
+    608,                      !- Density
+    1630,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    Wall Insulation [39],     !- Name
+    MediumRough,              !- Roughness
+    0.1184,                   !- Thickness
+    0.045,                    !- Conductivity
+    265,                      !- Density
+    836.8,                    !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    OS:Material:AirWall 1,    !- Name
+    MediumSmooth,             !- Roughness
+    0.01,                     !- Thickness
+    0.6,                      !- Conductivity
+    800,                      !- Density
+    1000,                     !- Specific Heat
+    0.95,                     !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material,
+    000_F16 Acoustic tile floor,    !- Name
+    MediumSmooth,             !- Roughness
+    0.33,                     !- Thickness
+    0.1,                      !- Conductivity
+    368,                      !- Density
+    590,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.2;                      !- Visible Absorptance
+
+Material:NoMass,
+    CP02 CARPET PAD,          !- Name
+    VeryRough,                !- Roughness
+    0.2165,                   !- Thermal Resistance
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.8;                      !- Visible Absorptance
+
+Material:NoMass,
+    MAT-SHEATH,               !- Name
+    Rough,                    !- Roughness
+    0.3626,                   !- Thermal Resistance
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+Material:AirGap,
+    000_F04 Wall air space resistance,    !- Name
+    0.15;                     !- Thermal Resistance
+
+Material:AirGap,
+    000_F05 Ceiling air space resistance,    !- Name
+    0.18;                     !- Thermal Resistance
+
+WindowMaterial:SimpleGlazingSystem,
+    Window,                   !- Name
+    1.4,                      !- UFactor
+    0.49999999999999994,      !- Solar Heat Gain Coefficient
+    0.6;                      !- Visible Transmittance
+
+WindowMaterial:Shade,
+    RollerBlind,              !- Name
+    0.2,                      !- Solar Transmittance
+    0.75,                     !- Solar Reflectance
+    0.05,                     !- Visible Transmittance
+    0.75,                     !- Visible Reflectance
+    0.9,                      !- Infrared Hemispherical Emissivity
+    0.05,                     !- Infrared Transmittance
+    0.01,                     !- Thickness
+    1,                        !- Conductivity
+    0.05,                     !- Shade to Glass Distance
+    0.5,                      !- Top Opening Multiplier
+    0.5,                      !- Bottom Opening Multiplier
+    0.5,                      !- LeftSide Opening Multiplier
+    0.5,                      !- RightSide Opening Multiplier
+    ;                         !- Airflow Permeability
+
+Construction,
+    000_Interior Ceiling,     !- Name
+    000_F16 Acoustic tile roof;    !- Outside Layer
+
+Construction,
+    ASHRAE_189.1-2009_ExtWall_SteelFrame_ClimateZone 4-8,    !- Name
+    1/2IN Gypsum;             !- Outside Layer
+
+Construction,
+    000_Interior Floor,       !- Name
+    000_F16 Acoustic tile floor;    !- Outside Layer
+
+Construction,
+    ASHRAE_189.1-2009_ExtRoof_IEAD_ClimateZone 2-5,    !- Name
+    Roof Membrane,            !- Outside Layer
+    Roof Insulation [21],     !- Layer 2
+    Metal Decking;            !- Layer 3
+
+Construction,
+    Exterior Window,          !- Name
+    Window;                   !- Outside Layer
+
+Construction,
+    Exterior Window with Shading,    !- Name
+    Window,                   !- Outside Layer
+    RollerBlind;              !- Layer 2
+
+Construction,
+    000_Interior Wall,        !- Name
+    000_G01a 19mm gypsum board,    !- Outside Layer
+    000_F04 Wall air space resistance,    !- Layer 2
+    000_G01a 19mm gypsum board;    !- Layer 3
+
+GlobalGeometryRules,
+    UpperLeftCorner,          !- Starting Vertex Position
+    Counterclockwise,         !- Vertex Entry Direction
+    Relative,                 !- Coordinate System
+    Relative,                 !- Daylighting Reference Point Coordinate System
+    Relative;                 !- Rectangular Surface Coordinate System
+
+Zone,
+    Thermal Zone 1,           !- Name
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0;                        !- Z Origin
+
+BuildingSurface:Detailed,
+    Ceiling,                  !- Name
+    Ceiling,                  !- Surface Type
+    000_Interior Ceiling,     !- Construction Name
+    Thermal Zone 1,           !- Zone Name
+    Adiabatic,                !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    ,                         !- View Factor to Ground
+    ,                         !- Number of Vertices
+    4,                        !- Vertex 1 Xcoordinate
+    4,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    4,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    3,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    3,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    4,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
+
+BuildingSurface:Detailed,
+    South Wall,               !- Name
+    Wall,                     !- Surface Type
+    ASHRAE_189.1-2009_ExtWall_SteelFrame_ClimateZone 4-8,    !- Construction Name
+    Thermal Zone 1,           !- Zone Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    ,                         !- View Factor to Ground
+    ,                         !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    4,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    4,                        !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
+
+BuildingSurface:Detailed,
+    East Wall,                !- Name
+    Wall,                     !- Surface Type
+    000_Interior Wall,        !- Construction Name
+    Thermal Zone 1,           !- Zone Name
+    Adiabatic,                !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    ,                         !- View Factor to Ground
+    ,                         !- Number of Vertices
+    4,                        !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    4,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    4,                        !- Vertex 3 Xcoordinate
+    4,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    4,                        !- Vertex 4 Xcoordinate
+    4,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
+
+BuildingSurface:Detailed,
+    North Wall,               !- Name
+    Wall,                     !- Surface Type
+    000_Interior Wall,        !- Construction Name
+    Thermal Zone 1,           !- Zone Name
+    Adiabatic,                !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    ,                         !- View Factor to Ground
+    ,                         !- Number of Vertices
+    4,                        !- Vertex 1 Xcoordinate
+    4,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    4,                        !- Vertex 2 Xcoordinate
+    4,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    4,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    4,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
+
+BuildingSurface:Detailed,
+    Floor,                    !- Name
+    Floor,                    !- Surface Type
+    000_Interior Floor,       !- Construction Name
+    Thermal Zone 1,           !- Zone Name
+    Adiabatic,                !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    ,                         !- View Factor to Ground
+    ,                         !- Number of Vertices
+    4,                        !- Vertex 1 Xcoordinate
+    4,                        !- Vertex 1 Ycoordinate
+    0,                        !- Vertex 1 Zcoordinate
+    4,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    4,                        !- Vertex 4 Ycoordinate
+    0;                        !- Vertex 4 Zcoordinate
+
+BuildingSurface:Detailed,
+    West Wall,                !- Name
+    Wall,                     !- Surface Type
+    000_Interior Wall,        !- Construction Name
+    Thermal Zone 1,           !- Zone Name
+    Adiabatic,                !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    ,                         !- View Factor to Ground
+    ,                         !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
+    4,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    4,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    South Wall window,        !- Name
+    Window,                   !- Surface Type
+    Exterior Window,          !- Construction Name
+    South Wall,               !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    wshCTRL1,                 !- Shading Control Name
+    ,                         !- Frame and Divider Name
+    1,                        !- Multiplier
+    autocalculate,            !- Number of Vertices
+    0.0020000000000000018,    !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
+    2.325,                    !- Vertex 1 Zcoordinate
+    0.0020000000000000018,    !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0.675,                    !- Vertex 2 Zcoordinate
+    3.998,                    !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0.675,                    !- Vertex 3 Zcoordinate
+    3.998,                    !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
+    2.325;                    !- Vertex 4 Zcoordinate
+
+WindowProperty:ShadingControl,
+    wshCTRL1,                 !- Name
+    InteriorShade,            !- Shading Type
+    Exterior Window with Shading,    !- Construction with Shading Name
+    OnIfScheduleAllows,       !- Shading Control Type
+    shadingSCH1,              !- Schedule Name
+    ,                         !- Setpoint
+    Yes,                      !- Shading Control Is Scheduled
+    No,                       !- Glare Control Is Active
+    RollerBlind,              !- Shading Device Material Name
+    FixedSlatAngle,           !- Type of Slat Angle Control for Blinds
+    ;                         !- Slat Angle Schedule Name
+
+WindowProperty:FrameAndDivider,
+    Frame,                    !- Name
+    0.03,                     !- Frame Width
+    0.04,                     !- Frame Outside Projection
+    0.04,                     !- Frame Inside Projection
+    5.79,                     !- Frame Conductance
+    1,                        !- Ratio of FrameEdge Glass Conductance to CenterOfGlass Conductance
+    0.7,                      !- Frame Solar Absorptance
+    0.7,                      !- Frame Visible Absorptance
+    0.9,                      !- Frame Thermal Hemispherical Emissivity
+    DividedLite,              !- Divider Type
+    ,                         !- Divider Width
+    ,                         !- Number of Horizontal Dividers
+    ,                         !- Number of Vertical Dividers
+    ,                         !- Divider Outside Projection
+    ,                         !- Divider Inside Projection
+    ,                         !- Divider Conductance
+    1,                        !- Ratio of DividerEdge Glass Conductance to CenterOfGlass Conductance
+    ,                         !- Divider Solar Absorptance
+    ,                         !- Divider Visible Absorptance
+    0.9;                      !- Divider Thermal Hemispherical Emissivity
+
+People,
+    people 1,                 !- Name
+    Thermal Zone 1,           !- Zone or ZoneList Name
+    OCCactuatorSCH,           !- Number of People Schedule Name
+    People,                   !- Number of People Calculation Method
+    1,                        !- Number of People
+    ,                         !- People per Zone Floor Area
+    ,                         !- Zone Floor Area per Person
+    0.3,                      !- Fraction Radiant
+    autocalculate,            !- Sensible Heat Fraction
+    Medium Office Activity,    !- Activity Level Schedule Name
+    3.82e-08,                 !- Carbon Dioxide Generation Rate
+    No,                       !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
+    ,                         !- Surface NameAngle Factor List Name
+    ,                         !- Work Efficiency Schedule Name
+    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
+
+Lights,
+    light,                    !- Name
+    Thermal Zone 1,           !- Zone or ZoneList Name
+    lightactuatorSCH,         !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Lighting Level
+    5.5,                      !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.5,                      !- Fraction Radiant
+    0.5,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    General,                  !- EndUse Subcategory
+    No;                       !- Return Air Fraction Calculated from Plenum Temperature
+
+ElectricEquipment,
+    Equipment,                !- Name
+    Thermal Zone 1,           !- Zone or ZoneList Name
+    Office spaces_Plug loads,    !- Schedule Name
+    Watts/Area,               !- Design Level Calculation Method
+    ,                         !- Design Level
+    7.5,                      !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0.1,                      !- Fraction Latent
+    0.5,                      !- Fraction Radiant
+    0.4;                      !- Fraction Lost
+
+Daylighting:Controls,
+    DLctrl,                   !- Name
+    Thermal Zone 1,           !- Zone Name
+    ,                         !- Daylighting Method
+    ,                         !- Availability Schedule Name
+    ,                         !- Lighting Control Type
+    ,                         !- Minimum Input Power Fraction for Continuous or ContinuousOff Dimming Control
+    ,                         !- Minimum Light Output Fraction for Continuous or ContinuousOff Dimming Control
+    ,                         !- Number of Stepped Control Steps
+    ,                         !- Probability Lighting will be Reset When Needed in Manual Stepped Control
+    ,                         !- Glare Calculation Daylighting Reference Point Name
+    ,                         !- Glare Calculation Azimuth Angle of View Direction Clockwise from Zone yAxis
+    ,                         !- Maximum Allowable Discomfort Glare Index
+    ,                         !- DElight Gridding Resolution
+    DLreference,              !- Daylighting Reference Point 1 Name
+    1,                        !- Fraction of Zone Controlled by Reference Point 1
+    1000000;                  !- Illuminance Setpoint at Reference Point 1
+
+Daylighting:ReferencePoint,
+    DLreference,              !- Name
+    Thermal Zone 1,           !- Zone Name
+    2,                        !- XCoordinate of Reference Point
+    2,                        !- YCoordinate of Reference Point
+    0.8;                      !- ZCoordinate of Reference Point
+
+ZoneInfiltration:DesignFlowRate,
+    infiltration,             !- Name
+    Thermal Zone 1,           !- Zone or ZoneList Name
+    Small Office Infil Quarter On,    !- Schedule Name
+    AirChanges/Hour,          !- Design Flow Rate Calculation Method
+    ,                         !- Design Flow Rate
+    ,                         !- Flow per Zone Floor Area
+    ,                         !- Flow per Exterior Surface Area
+    0.3,                      !- Air Changes per Hour
+    1,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0,                        !- Velocity Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
+
+HVACTemplate:Thermostat,
+    Thermostat,               !- Name
+    H_SPSCH,                  !- Heating Setpoint Schedule Name
+    ,                         !- Constant Heating Setpoint
+    C_SPSCH,                  !- Cooling Setpoint Schedule Name
+    ;                         !- Constant Cooling Setpoint
+
+HVACTemplate:Zone:IdealLoadsAirSystem,
+    Thermal Zone 1,           !- Zone Name
+    Thermostat,               !- Template Thermostat Name
+    ,                         !- System Availability Schedule Name
+    50,                       !- Maximum Heating Supply Air Temperature
+    13,                       !- Minimum Cooling Supply Air Temperature
+    0.0156,                   !- Maximum Heating Supply Air Humidity Ratio
+    0.0077,                   !- Minimum Cooling Supply Air Humidity Ratio
+    LimitFlowRateAndCapacity,    !- Heating Limit
+    0.1,                      !- Maximum Heating Air Flow Rate
+    1500,                     !- Maximum Sensible Heating Capacity
+    LimitFlowRateAndCapacity,    !- Cooling Limit
+    0.1,                      !- Maximum Cooling Air Flow Rate
+    1000,                     !- Maximum Total Cooling Capacity
+    ,                         !- Heating Availability Schedule Name
+    ,                         !- Cooling Availability Schedule Name
+    ConstantSensibleHeatRatio,    !- Dehumidification Control Type
+    0.7,                      !- Cooling Sensible Heat Ratio
+    60,                       !- Dehumidification Setpoint
+    None,                     !- Humidification Control Type
+    30,                       !- Humidification Setpoint
+    Flow/Zone,                !- Outdoor Air Method
+    ,                         !- Outdoor Air Flow Rate per Person
+    ,                         !- Outdoor Air Flow Rate per Zone Floor Area
+    0.0073,                   !- Outdoor Air Flow Rate per Zone
+    ,                         !- Design Specification Outdoor Air Object Name
+    ,                         !- Demand Controlled Ventilation Type
+    DifferentialDryBulb,      !- Outdoor Air Economizer Type
+    Enthalpy,                 !- Heat Recovery Type
+    0.8,                      !- Sensible Heat Recovery Effectiveness
+    0.65;                     !- Latent Heat Recovery Effectiveness
+
+EnergyManagementSystem:Sensor,
+    solrad,                   !- Name
+    ,                         !- OutputVariable or OutputMeter Index Key Name
+    Site Exterior Horizontal Beam Illuminance;    !- OutputVariable or OutputMeter Name
+
+EnergyManagementSystem:Sensor,
+    luxsensor,                !- Name
+    DLctrl,                   !- OutputVariable or OutputMeter Index Key Name
+    Daylighting Reference Point 1 Illuminance;    !- OutputVariable or OutputMeter Name
+
+EnergyManagementSystem:Sensor,
+    Tempsensor,               !- Name
+    Thermal Zone 1,           !- OutputVariable or OutputMeter Index Key Name
+    Zone Mean Air Temperature;    !- OutputVariable or OutputMeter Name
+
+EnergyManagementSystem:Actuator,
+    blinds1,                  !- Name
+    shadingSCH1,              !- Actuated Component Unique Name
+    Schedule:Constant,        !- Actuated Component Type
+    Schedule Value;           !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    OCCactuator,              !- Name
+    OCCactuatorSCH,           !- Actuated Component Unique Name
+    Schedule:Constant,        !- Actuated Component Type
+    Schedule Value;           !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    lightactuator,            !- Name
+    lightactuatorSCH,         !- Actuated Component Unique Name
+    Schedule:Constant,        !- Actuated Component Type
+    Schedule Value;           !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    C_SPactuator,             !- Name
+    C_SPSCH,                  !- Actuated Component Unique Name
+    Schedule:Constant,        !- Actuated Component Type
+    Schedule Value;           !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    H_SPactuator,             !- Name
+    H_SPSCH,                  !- Actuated Component Unique Name
+    Schedule:Constant,        !- Actuated Component Type
+    Schedule Value;           !- Actuated Component Control Type
+
+EnergyManagementSystem:ProgramCallingManager,
+    myprogram,                !- Name
+    BeginTimestepBeforePredictor,    !- EnergyPlus Model Calling Point
+    Tolerantoccupant,         !- Program Name 1
+    occupancymodel,           !- Program Name 2
+    lightingmodel,            !- Program Name 3
+    occlightingmodel,         !- Program Name 4
+    occthermostatmodel,       !- Program Name 5
+    Blindsmodel;              !- Program Name 6
+
+EnergyManagementSystem:Program,
+    Sensitiveoccupant,        !- Name
+    IF WarmupFlag == 1,       !- Program Line 1
+    set E1 = 16.5,            !- Program Line 2
+    set E2 = 0-0.6,           !- Program Line 3
+    set E3 = 0-10,            !- Program Line 4
+    set E4 = 0.57,            !- Program Line 5
+    set B1 = 1.9,             !- Program Line 6
+    set B2 = 0-0.007,         !- Program Line 7
+    set B3 = 0-3.4,           !- Program Line 8
+    set B4 = 0-0.0015,        !- Program Line 9
+    set B5 = 0-1,             !- Program Line 10
+    set B6 = 0.004,           !- Program Line 11
+    endif;                    !- Program Line 12
+
+EnergyManagementSystem:Program,
+    Moderateoccupant,         !- Name
+    IF WarmupFlag == 1,       !- Program Line 1
+    set E1= 20,               !- Program Line 2
+    set E2=0-0.62,            !- Program Line 3
+    set E3=0-9,               !- Program Line 4
+    set E4=0.61,              !- Program Line 5
+    set B1 =1.6,              !- Program Line 6
+    set B2 =0-0.009,          !- Program Line 7
+    set B3 =0-3.9,            !- Program Line 8
+    set B4 =0-0.002,          !- Program Line 9
+    set B5 = 0-1.3,           !- Program Line 10
+    set B6 =0.003,            !- Program Line 11
+    endif;                    !- Program Line 12
+
+EnergyManagementSystem:Program,
+    Tolerantoccupant,         !- Name
+    IF WarmupFlag == 1,       !- Program Line 1
+    set E1= 22,               !- Program Line 2
+    set E2=0-0.65,            !- Program Line 3
+    set E3=0-8,               !- Program Line 4
+    set E4=0.65,              !- Program Line 5
+    set B1 =1.3,              !- Program Line 6
+    set B2 =0-0.011,          !- Program Line 7
+    set B3 =0-4.4,            !- Program Line 8
+    set B4 =0-0.0025,         !- Program Line 9
+    set B5 = 0-1.6,           !- Program Line 10
+    set B6 =0.002,            !- Program Line 11
+    endif;                    !- Program Line 12
+
+EnergyManagementSystem:Program,
+    occupancymodel,           !- Name
+    if WarmupFlag == 1,       !- Program Line 1
+    set Seeder=@SeedRandom ActualTime,    !- Program Line 2
+    set A1=@RandomNormal 8 1 7 9,    !- Program Line 3
+    set A2=@RandomNormal 10 1 9 11,    !- Program Line 4
+    set A3=@RandomNormal 12 1 11 13,    !- Program Line 5
+    set A4=@RandomNormal 14 1 13 15,    !- Program Line 6
+    set A5=@RandomNormal 17 1 16 19,    !- Program Line 7
+    set A6=@RandomNormal 0.15 1 0 1,    !- Program Line 8
+    set A7=@RandomNormal 1 1 0 2,    !- Program Line 9
+    set ARR_time=@RandomNormal A1 0.25 7 9,    !- Program Line 10
+    set Coffee1=@RandomNormal A2 0.25 9 11,    !- Program Line 11
+    set Lunch=@RandomNormal A3 0.25 11 13,    !- Program Line 12
+    set Coffee2=@RandomNormal A4 0.25 13 15,    !- Program Line 13
+    set DEP_time=@RandomNormal A5 0.25 16 19,    !- Program Line 14
+    set handle=@RandomUniform 0 1,    !- Program Line 15
+    set handle=@Ln handle,    !- Program Line 16
+    set Vac1=A6*handle*(0-1),    !- Program Line 17
+    set Vac2=A7*handle*(0-1),    !- Program Line 18
+    endif,                    !- Program Line 19
+    if CurrentTime==1,        !- Program Line 20
+    set ARR_time=@RandomNormal A1 0.25 7 9,    !- Program Line 21
+    set Coffee1=@RandomNormal A2 0.25 9 11,    !- Program Line 22
+    set Lunch=@RandomNormal A3 0.25 11 13,    !- Program Line 23
+    set Cofee2=@RandomNormal A4 0.25 13 15,    !- Program Line 24
+    set DEP_time=@RandomNormal A5 0.25 16 19,    !- Program Line 25
+    set handle=@RandomUniform 0 1,    !- Program Line 26
+    set handle=@Ln handle,    !- Program Line 27
+    set Vac1=A6*handle*(0-1),    !- Program Line 28
+    set Vac2=A7*handle*(0-1),    !- Program Line 29
+    endif,                    !- Program Line 30
+    set ARR_event= 0,         !- Program Line 31
+    set DPT_event = 0,        !- Program Line 32
+    if DayOfWeek==7 || DayOfWeek==1,    !- Program Line 33
+    set Presence=0,           !- Program Line 34
+    else,                     !- Program Line 35
+    if CurrentTime <= ARR_time,    !- Program Line 36
+    set Presence=0,           !- Program Line 37
+    endif,                    !- Program Line 38
+    if Presence == 0,         !- Program Line 39
+    if CurrentTime>ARR_time && CurrentTime<=Coffee1,    !- Program Line 40
+    set Presence=1,           !- Program Line 41
+    set ARR_event = 1,        !- Program Line 42
+    endif,                    !- Program Line 43
+    if CurrentTime>Coffee1+Vac1 && CurrentTime<=Lunch,    !- Program Line 44
+    set Presence=1,           !- Program Line 45
+    set ARR_event = 1,        !- Program Line 46
+    endif,                    !- Program Line 47
+    if CurrentTime>Lunch+Vac2 && CurrentTime<=Coffee2,    !- Program Line 48
+    set Presence=1,           !- Program Line 49
+    set ARR_event = 1,        !- Program Line 50
+    endif,                    !- Program Line 51
+    if CurrentTime>Coffee2+Vac1 && CurrentTime<=DEP_time,    !- Program Line 52
+    set Presence=1,           !- Program Line 53
+    set  ARR_event = 1,       !- Program Line 54
+    endif,                    !- Program Line 55
+    endif,                    !- Program Line 56
+    if Presence == 1,         !- Program Line 57
+    if CurrentTime>Coffee1 && CurrentTime<=Coffee1 +Vac1,    !- Program Line 58
+    set Presence=0,           !- Program Line 59
+    set DPT_event = 1,        !- Program Line 60
+    endif,                    !- Program Line 61
+    if CurrentTime>Lunch && CurrentTime<=Lunch+Vac2,    !- Program Line 62
+    set Presence=0,           !- Program Line 63
+    set DPT_event= 1,         !- Program Line 64
+    endif,                    !- Program Line 65
+    if CurrentTime>Coffee2 && CurrentTime<=Coffee2+Vac1,    !- Program Line 66
+    set Presence=0,           !- Program Line 67
+    set DPT_event = 1,        !- Program Line 68
+    endif,                    !- Program Line 69
+    if CurrentTime>Dep_time,    !- Program Line 70
+    set Presence=0,           !- Program Line 71
+    set DPT_event = 1,        !- Program Line 72
+    endif,                    !- Program Line 73
+    endif,                    !- Program Line 74
+    endif,                    !- Program Line 75
+    set occactuator = Presence;    !- Program Line 76
+
+EnergyManagementSystem:Program,
+    occlightingmodel,         !- Name
+    if WarmupFlag == 1,       !- Program Line 1
+    set luxon=0,              !- Program Line 2
+    set luxmean=220,          !- Program Line 3
+    set count=0,              !- Program Line 4
+    set counton=0,            !- Program Line 5
+    set countoff=0,           !- Program Line 6
+    set x=83.0,               !- Program Line 7
+    set T=0,                  !- Program Line 8
+    set i=1,                  !- Program Line 9
+    set occcounton=0,         !- Program Line 10
+    set occcountoff=0,        !- Program Line 11
+    set occswitch_on=0,       !- Program Line 12
+    set occswitch_off=0,      !- Program Line 13
+    set luxtotal=0,           !- Program Line 14
+    set trendsumlux=0,        !- Program Line 15
+    set luxmax=639,           !- Program Line 16
+    endif,                    !- Program Line 17
+    if switch_on==1,          !- Program Line 18
+    set luxon=luxsensor,      !- Program Line 19
+    set count=count+1,        !- Program Line 20
+    else,                     !- Program Line 21
+    set luxon=0,              !- Program Line 22
+    endif,                    !- Program Line 23
+    if switch_off==1,         !- Program Line 24
+    set countoff=countoff+1,    !- Program Line 25
+    endif,                    !- Program Line 26
+    if switch_on==1,          !- Program Line 27
+    set counton=counton+1,    !- Program Line 28
+    endif,                    !- Program Line 29
+    set f= (1/systemtimestep)*x*24,    !- Program Line 30
+    set j=(365/x),            !- Program Line 31
+    if i<=j,                  !- Program Line 32
+    if T==i*f,                !- Program Line 33
+    run mysubroutine,         !- Program Line 34
+    set i=i+1,                !- Program Line 35
+    endif,                    !- Program Line 36
+    endif,                    !- Program Line 37
+    set T=T+1,                !- Program Line 38
+    set occswitch_on=0,       !- Program Line 39
+    set occswitch_off=0,      !- Program Line 40
+    if presence==0 && lighting==1,    !- Program Line 41
+    set lighting=0,           !- Program Line 42
+    set occswitch_off=1,      !- Program Line 43
+    endif,                    !- Program Line 44
+    if presence==1 && luxsensor<=luxmean && lighting==0,    !- Program Line 45
+    set lighting=1,           !- Program Line 46
+    set occswitch_on=1,       !- Program Line 47
+    endif,                    !- Program Line 48
+    if presence==1 && luxmax<=luxsensor && lighting==1,    !- Program Line 49
+    set lighting=0,           !- Program Line 50
+    set occswitch_off=1,      !- Program Line 51
+    endif,                    !- Program Line 52
+    if occswitch_on==1,       !- Program Line 53
+    set occcounton=occcounton+1,    !- Program Line 54
+    endif,                    !- Program Line 55
+    if occswitch_off==1,      !- Program Line 56
+    set occcountoff=occcountoff+1,    !- Program Line 57
+    endif,                    !- Program Line 58
+    set lightactuator=lighting;    !- Program Line 59
+
+EnergyManagementSystem:Program,
+    lightingmodel,            !- Name
+    if WarmupFlag == 1,       !- Program Line 1
+    set Seeder=@SeedRandom ActualTime,    !- Program Line 2
+    set DEP_time=@RandomNormal 5 0.25 16 19,    !- Program Line 3
+    set lighting=0,           !- Program Line 4
+    endif,                    !- Program Line 5
+    set switch_on=0,          !- Program Line 6
+    set switch_off=0,         !- Program Line 7
+    if ARR_event== 1 && lighting==0,    !- Program Line 8
+    set handle=B1 +B2 *luxsensor,    !- Program Line 9
+    set handle=@Max handle -20,    !- Program Line 10
+    set handle=@Min handle 20,    !- Program Line 11
+    set handle=@Exp handle,    !- Program Line 12
+    set handle=handle/(handle+1),    !- Program Line 13
+    set R=@RandomUniform 0 1,    !- Program Line 14
+    if handle>R,              !- Program Line 15
+    set lighting=1,           !- Program Line 16
+    set switch_on=1,          !- Program Line 17
+    endif,                    !- Program Line 18
+    endif,                    !- Program Line 19
+    if Presence>0 && luxsensor<240 && lighting==0,    !- Program Line 20
+    set handle=B3+B4 *luxsensor,    !- Program Line 21
+    set handle=@Max handle -20,    !- Program Line 22
+    set handle=@Min handle 20,    !- Program Line 23
+    set handle=@Exp handle,    !- Program Line 24
+    set handle=handle/(handle+1),    !- Program Line 25
+    set R=@RandomUniform 0 1,    !- Program Line 26
+    if handle>R,              !- Program Line 27
+    set lighting=1,           !- Program Line 28
+    set switch_on=1,          !- Program Line 29
+    endif,                    !- Program Line 30
+    endif,                    !- Program Line 31
+    if DPT_event== 1 && CurrentTime <DEP_time && lighting==1,    !- Program Line 32
+    set handle=B5 +B6 *Vac1 *60,    !- Program Line 33
+    set handle=@Max handle -20,    !- Program Line 34
+    set handle=@Min handle 20,    !- Program Line 35
+    set handle=@Exp handle,    !- Program Line 36
+    set handle=handle/(handle+1),    !- Program Line 37
+    set R=@RandomUniform 0 1,    !- Program Line 38
+    if handle>R,              !- Program Line 39
+    set lighting =0,          !- Program Line 40
+    set switch_off=1,         !- Program Line 41
+    endif,                    !- Program Line 42
+    elseif DPT_event == 1 && DayOfWeek == 6 && lighting==1,    !- Program Line 43
+    set handle=B5 +B6 *2880,    !- Program Line 44
+    set handle=@Max handle -20,    !- Program Line 45
+    set handle=@Min handle 20,    !- Program Line 46
+    set handle=@Exp handle,    !- Program Line 47
+    set handle=handle/(handle+1),    !- Program Line 48
+    set R=@RandomUniform 0 1,    !- Program Line 49
+    if handle>R,              !- Program Line 50
+    set lighting =0,          !- Program Line 51
+    set switch_off=1,         !- Program Line 52
+    endif,                    !- Program Line 53
+    elseif DPT_event == 1 && lighting==1,    !- Program Line 54
+    set handle=B5+B6*720,     !- Program Line 55
+    set handle=@Max handle -20,    !- Program Line 56
+    set handle=@Min handle 20,    !- Program Line 57
+    set handle=@Exp handle,    !- Program Line 58
+    set handle=handle/(handle+1),    !- Program Line 59
+    set R=@RandomUniform 0 1,    !- Program Line 60
+    if handle>R,              !- Program Line 61
+    set lighting=0,           !- Program Line 62
+    set switch_off=1,         !- Program Line 63
+    endif,                    !- Program Line 64
+    endif,                    !- Program Line 65
+    set lightactuator=lighting;    !- Program Line 66
+
+EnergyManagementSystem:Program,
+    Gunayocclightingmodel,    !- Name
+    IF WarmupFlag == 1,       !- Program Line 1
+    set D1 = 1,               !- Program Line 2
+    set D2 = 0-0.1,           !- Program Line 3
+    set occGswitch_off=0,     !- Program Line 4
+    ENDIF,                    !- Program Line 5
+    set occGswitch_off=0,     !- Program Line 6
+    If switch_on == 1,        !- Program Line 7
+    set h = D1 + D2*luxsensor*0.0929,    !- Program Line 8
+    set h = @Exp 0-h,         !- Program Line 9
+    set h = 1/( 1+h ),        !- Program Line 10
+    set D1 = D1 + (1-h)*h*(1-h)*0.001,    !- Program Line 11
+    set D2 = D2 + (1-h)*h*(1-h)*luxsensor*0.0929*0.001,    !- Program Line 12
+    EndIF,                    !- Program Line 13
+    IF Minute == 30 || Minute == 60,    !- Program Line 14
+    IF Presence == 1 && switch_on == 0,    !- Program Line 15
+    set h = D1 + D2*luxsensor*0.0929,    !- Program Line 16
+    set h = @Exp 0-h,         !- Program Line 17
+    set h = 1/( 1+h ),        !- Program Line 18
+    set D1 = D1 + (0-h)*h*(1-h)*0.001,    !- Program Line 19
+    set D2 = D2 + (0-h)*h*(1-h)*luxsensor*0.0929*0.001,    !- Program Line 20
+    EndIF,                    !- Program Line 21
+    EndIF,                    !- Program Line 22
+    set Light_SP = (0-D1-2)/D2,    !- Program Line 23
+    IF Light_SP <5.574,       !- Program Line 24
+    set Light_SP =5.574,      !- Program Line 25
+    ELSEIF Light_SP>61.314,    !- Program Line 26
+    set Light_SP =61.314,     !- Program Line 27
+    ENDIF,                    !- Program Line 28
+    IF luxsensor*0.0929 > Light_SP && lighting==1,    !- Program Line 29
+    set lighting = 0,         !- Program Line 30
+    set occGswitch_off=1,     !- Program Line 31
+    set lightactuator = lighting,    !- Program Line 32
+    ENDIF;                    !- Program Line 33
+
+EnergyManagementSystem:Program,
+    Thermostatmodel,          !- Name
+    IF WarmupFlag == 1,       !- Program Line 1
+    set Seeder = @SeedRandom ActualTime,    !- Program Line 2
+    set HTDiff_SP=@RandomNormal 0.4 0.3 0.1 0.7,    !- Program Line 3
+    set CLDiff_SP=@RandomNormal 0.4 0.2 0.2 0.6,    !- Program Line 4
+    set SP_Dcr = 0,           !- Program Line 5
+    set SP_Inc = 0,           !- Program Line 6
+    set HSP=22,               !- Program Line 7
+    set CSP=23,               !- Program Line 8
+    ENDIF,                    !- Program Line 9
+    set SP_Dcr = 0,           !- Program Line 10
+    set SP_Inc = 0,           !- Program Line 11
+    if Hour == 0,             !- Program Line 12
+    set HSP=22,               !- Program Line 13
+    set CSP=23,               !- Program Line 14
+    endif,                    !- Program Line 15
+    if Minute == 30,          !- Program Line 16
+    if presence == 1,         !- Program Line 17
+    set handle=E1+E2*Tempsensor,    !- Program Line 18
+    set handle=@Exp handle,    !- Program Line 19
+    set handle=1/(handle+1),    !- Program Line 20
+    Set P_decr = handle,      !- Program Line 21
+    set R=@RandomUniform 0 1,    !- Program Line 22
+    if handle>R,              !- Program Line 23
+    set CSP = CSP - CLDiff_SP,    !- Program Line 24
+    set SP_Dcr = 1,           !- Program Line 25
+    endif,                    !- Program Line 26
+    set handle=E3+E4*Tempsensor,    !- Program Line 27
+    set handle=@Exp handle,    !- Program Line 28
+    set handle=1/(handle+1),    !- Program Line 29
+    set R=@RandomUniform 0 1,    !- Program Line 30
+    Set P_incr = handle,      !- Program Line 31
+    if handle>R,              !- Program Line 32
+    set HSP = HSP + HTDiff_SP,    !- Program Line 33
+    set SP_Inc = 1,           !- Program Line 34
+    endif,                    !- Program Line 35
+    endif,                    !- Program Line 36
+    endif,                    !- Program Line 37
+    IF Month >=5 && Month <10,    !- Program Line 38
+    set HSP = 18,             !- Program Line 39
+    EndIF,                    !- Program Line 40
+    If Month <5,              !- Program Line 41
+    set CSP = 27,             !- Program Line 42
+    ENDIF,                    !- Program Line 43
+    If Month >= 10,           !- Program Line 44
+    set CSP = 27,             !- Program Line 45
+    ENDIF,                    !- Program Line 46
+    set H_SPactuator = HSP,    !- Program Line 47
+    set C_SPactuator = CSP;    !- Program Line 48
+
+EnergyManagementSystem:Program,
+    occthermostatmodel,       !- Name
+    IF WarmupFlag == 1,       !- Program Line 1
+    set Seeder = @SeedRandom ActualTime,    !- Program Line 2
+    set aHot = 0-25,          !- Program Line 3
+    set bHot = 1,             !- Program Line 4
+    set aCold = 20,           !- Program Line 5
+    set bCold = -1,           !- Program Line 6
+    set SP_Dcr = 0,           !- Program Line 7
+    set SP_Inc = 0,           !- Program Line 8
+    ENDIF,                    !- Program Line 9
+    if Hour == 0,             !- Program Line 10
+    set CSP=23,               !- Program Line 11
+    endif,                    !- Program Line 12
+    set SP_Dcr = 0,           !- Program Line 13
+    set SP_Inc = 0,           !- Program Line 14
+    if Minute == 30,          !- Program Line 15
+    if presence == 1,         !- Program Line 16
+    set handle=E1+E2*Tempsensor,    !- Program Line 17
+    set handle=@Exp handle,    !- Program Line 18
+    set handle=1/(handle+1),    !- Program Line 19
+    Set P_decr = handle,      !- Program Line 20
+    set R=@RandomUniform 0 1,    !- Program Line 21
+    if handle>R,              !- Program Line 22
+    set SP_Dcr = 1,           !- Program Line 23
+    endif,                    !- Program Line 24
+    set handle=E3+E4*Tempsensor,    !- Program Line 25
+    set handle=@Exp handle,    !- Program Line 26
+    set handle=1/(handle+1),    !- Program Line 27
+    set R=@RandomUniform 0 1,    !- Program Line 28
+    Set P_incr = handle,      !- Program Line 29
+    if handle>R,              !- Program Line 30
+    set SP_Inc = 1,           !- Program Line 31
+    endif,                    !- Program Line 32
+    endif,                    !- Program Line 33
+    endif,                    !- Program Line 34
+    IF SP_Dcr == 1,           !- Program Line 35
+    set P_sp = aHot+bHot*Tempsensor,    !- Program Line 36
+    set P_sp = @EXP 0-P_sp,    !- Program Line 37
+    set P_sp = 1/(1+P_sp),    !- Program Line 38
+    set aHot = aHot + (1-P_sp)*P_sp*(1-P_sp)*0.001,    !- Program Line 39
+    set bHot = bHot + (1-P_sp)*P_sp*(1-P_sp)*Tempsensor*0.001,    !- Program Line 40
+    ENDIF,                    !- Program Line 41
+    IF SP_Inc == 1,           !- Program Line 42
+    If Month < 5 || Month > 9,    !- Program Line 43
+    set P_sp = aCold+bCold*Tempsensor,    !- Program Line 44
+    set P_sp = @EXP 0-P_sp,    !- Program Line 45
+    set P_sp = 1/(1+P_sp),    !- Program Line 46
+    set aCold = aCold + (1-P_sp)*P_sp*(1-P_sp)*0.001,    !- Program Line 47
+    set bCold = bCold + (1-P_sp)*P_sp*(1-P_sp)*Tempsensor*0.001,    !- Program Line 48
+    endif,                    !- Program Line 49
+    ENDIF,                    !- Program Line 50
+    IF Minute ==60,           !- Program Line 51
+    If presence == 1,         !- Program Line 52
+    If Month < 5 || Month > 9,    !- Program Line 53
+    set P_sp = aCold+bCold*Tempsensor,    !- Program Line 54
+    set P_sp = @EXP 0-P_sp,    !- Program Line 55
+    set P_sp = 1/(1+P_sp),    !- Program Line 56
+    set aCold = aCold + (0-P_sp)*P_sp*(1-P_sp)*0.001,    !- Program Line 57
+    set bCold = bCold + (0-P_sp)*P_sp*(1-P_sp)*Tempsensor*0.001,    !- Program Line 58
+    endif,                    !- Program Line 59
+    IF Month >=5,             !- Program Line 60
+    set P_sp = aHot+bHot*Tempsensor,    !- Program Line 61
+    set P_sp = @EXP 0-P_sp,    !- Program Line 62
+    set P_sp = 1/(1+P_sp),    !- Program Line 63
+    set aHot = aHot + (0-P_sp)*P_sp*(1-P_sp)*0.001,    !- Program Line 64
+    set bHot = bHot + (0-P_sp)*P_sp*(1-P_sp)*Tempsensor*0.001,    !- Program Line 65
+    ENDIF,                    !- Program Line 66
+    ENDIF,                    !- Program Line 67
+    ENDIF,                    !- Program Line 68
+    If Month < 5 || Month > 9,    !- Program Line 69
+    set HSP = (0-aCold-2)/bCold,    !- Program Line 70
+    ENDIF,                    !- Program Line 71
+    IF HSP < 18.0,            !- Program Line 72
+    set HSP = 18.0,           !- Program Line 73
+    ELSEIF HSP >28.0,         !- Program Line 74
+    set HSP = 28.0,           !- Program Line 75
+    ENDIF,                    !- Program Line 76
+    set CSP = (0-aHot-2)/bHot,    !- Program Line 77
+    IF CSP < 17.0,            !- Program Line 78
+    set CSP = 17.0,           !- Program Line 79
+    ELSEIF CSP > 28.0,        !- Program Line 80
+    set CSP = 28.0,           !- Program Line 81
+    ENDIF,                    !- Program Line 82
+    IF Month >=5 && Month <10,    !- Program Line 83
+    set HSP = 18,             !- Program Line 84
+    EndIF,                    !- Program Line 85
+    If Month <5,              !- Program Line 86
+    set CSP = 27,             !- Program Line 87
+    ENDIF,                    !- Program Line 88
+    If Month >= 10,           !- Program Line 89
+    set CSP = 27,             !- Program Line 90
+    ENDIF,                    !- Program Line 91
+    set C_SPactuator = CSP,    !- Program Line 92
+    set H_SPactuator = HSP;    !- Program Line 93
+
+EnergyManagementSystem:Program,
+    Blindsmodel,              !- Name
+    if WarmupFlag == 1,       !- Program Line 1
+    set Seeder=@SeedRandom ActualTime,    !- Program Line 2
+    set blinds =0,            !- Program Line 3
+    set blinds1=0,            !- Program Line 4
+    set blinds2=0,            !- Program Line 5
+    set blinds3=0,            !- Program Line 6
+    set blinds4=0,            !- Program Line 7
+    set C1 =@RandomNormal 0-5.2 0.16 0-10 0,    !- Program Line 8
+    set C2=@RandomNormal 0.001 0.0001 0 1,    !- Program Line 9
+    set C3=@RandomNormal 0-6.7 0.1 0-10 0,    !- Program Line 10
+    set C4=@RandomNormal 0.0008 0.0001 0 1,    !- Program Line 11
+    set C5=@RandomNormal 0-2.5 0.15 0-10 0,    !- Program Line 12
+    set C6=@RandomNormal 0.00000091 0.00000133 0 1,    !- Program Line 13
+    set C7=@RandomNormal 0-1.5 0.1 0-100 0,    !- Program Line 14
+    set C8=@RandomNormal 0-0.0007 0.00005 0-1 0,    !- Program Line 15
+    set C9=@RandomNormal 0-3.6 0.03 0-100 0,    !- Program Line 16
+    set C10=@RandomNormal 0-0.0003 0.00002 0-1 0,    !- Program Line 17
+    set C11=@RandomNormal 0.43 0.062 0 100,    !- Program Line 18
+    set C12=@RandomNormal 0-0.000023 0.0000011 0-1 0,    !- Program Line 19
+    endif,                    !- Program Line 20
+    set alpha=1.708,          !- Program Line 21
+    if ARR_event == 1 && blinds<1,    !- Program Line 22
+    set handle=C1+C2*Luxsensor,    !- Program Line 23
+    set handle=@Max handle -20,    !- Program Line 24
+    set handle=@Min handle 20,    !- Program Line 25
+    set handle=@Exp handle,    !- Program Line 26
+    set R=@RandomUniform 0 1,    !- Program Line 27
+    set handle=handle/(handle+1),    !- Program Line 28
+    if handle>R,              !- Program Line 29
+    set handle=C5+C6*SolRad,    !- Program Line 30
+    set handle=@Max handle -20,    !- Program Line 31
+    set handle=@Min handle 20,    !- Program Line 32
+    set handle=@Exp handle,    !- Program Line 33
+    set handle=handle/(handle+1),    !- Program Line 34
+    set R=@RandomUniform 0 1,    !- Program Line 35
+    if handle>R,              !- Program Line 36
+    set blinds=1,             !- Program Line 37
+    else,                     !- Program Line 38
+    set lambda=@Exp 0-2.294+1.522*blinds,    !- Program Line 39
+    set db = @RandomUniform 0 1,    !- Program Line 40
+    set db = @ln (1-db),      !- Program Line 41
+    set lambda = (lambda^alpha)*(0-1),    !- Program Line 42
+    set db=db*lambda,         !- Program Line 43
+    set db=db^(1/alpha),      !- Program Line 44
+    set blinds = db,          !- Program Line 45
+    endif,                    !- Program Line 46
+    endif,                    !- Program Line 47
+    endif,                    !- Program Line 48
+    if Presence == 1 && blinds<1,    !- Program Line 49
+    set handle=C3+C4*Luxsensor,    !- Program Line 50
+    set handle=@Max handle -20,    !- Program Line 51
+    set handle=@Min handle 20,    !- Program Line 52
+    set handle=@Exp handle,    !- Program Line 53
+    set R=@RandomUniform 0 1,    !- Program Line 54
+    set handle=handle/(handle+1),    !- Program Line 55
+    if handle>R,              !- Program Line 56
+    set handle=C5+C6*SolRad,    !- Program Line 57
+    set handle=@Max handle -20,    !- Program Line 58
+    set handle=@Min handle 20,    !- Program Line 59
+    set handle=@Exp handle,    !- Program Line 60
+    set handle=handle/(handle+1),    !- Program Line 61
+    set R=@RandomUniform 0 1,    !- Program Line 62
+    if handle>R,              !- Program Line 63
+    set blinds=1,             !- Program Line 64
+    else,                     !- Program Line 65
+    set lambda=@Exp 0-2.294+1.522*blinds,    !- Program Line 66
+    set db = @RandomUniform 0 1,    !- Program Line 67
+    set db = @ln (1-db),      !- Program Line 68
+    set lambda = (lambda^alpha)*(0-1),    !- Program Line 69
+    set db=db*lambda,         !- Program Line 70
+    set db=db^(1/alpha),      !- Program Line 71
+    set blinds = db,          !- Program Line 72
+    endif,                    !- Program Line 73
+    endif,                    !- Program Line 74
+    endif,                    !- Program Line 75
+    if ARR_event == 1 && blinds==1,    !- Program Line 76
+    set handle=C7+C8*Luxsensor,    !- Program Line 77
+    set handle=@Max handle -20,    !- Program Line 78
+    set handle=@Min handle 20,    !- Program Line 79
+    set handle=@Exp handle,    !- Program Line 80
+    set R=@RandomUniform 0 1,    !- Program Line 81
+    set handle=handle/(handle+1),    !- Program Line 82
+    if handle>R,              !- Program Line 83
+    set handle=C11+C12*SolRad,    !- Program Line 84
+    set handle=@Max handle -20,    !- Program Line 85
+    set handle=@Min handle 20,    !- Program Line 86
+    set handle=@Exp handle,    !- Program Line 87
+    set handle=handle/(handle+1),    !- Program Line 88
+    set R=@RandomUniform 0 1,    !- Program Line 89
+    if handle>R,              !- Program Line 90
+    set blinds=0,             !- Program Line 91
+    else,                     !- Program Line 92
+    set lambda=@Exp 0-2.294+1.522*blinds,    !- Program Line 93
+    set db = @RandomUniform 0 1,    !- Program Line 94
+    set db = @ln (1-db),      !- Program Line 95
+    set lambda = (lambda^alpha)*(0-1),    !- Program Line 96
+    set db=db*lambda,         !- Program Line 97
+    set db=db^(1/alpha),      !- Program Line 98
+    set blinds = 1-db,        !- Program Line 99
+    endif,                    !- Program Line 100
+    endif,                    !- Program Line 101
+    endif,                    !- Program Line 102
+    if Presence == 1 && blinds==1,    !- Program Line 103
+    set handle=C9+C10*Luxsensor,    !- Program Line 104
+    set handle=@Max handle -20,    !- Program Line 105
+    set handle=@Min handle 20,    !- Program Line 106
+    set handle=@Exp handle,    !- Program Line 107
+    set R=@RandomUniform 0 1,    !- Program Line 108
+    set handle=handle/(handle+1),    !- Program Line 109
+    if handle>R,              !- Program Line 110
+    set handle=C5+C6*SolRad,    !- Program Line 111
+    set handle=@Max handle -20,    !- Program Line 112
+    set handle=@Min handle 20,    !- Program Line 113
+    set handle=@Exp handle,    !- Program Line 114
+    set handle=handle/(handle+1),    !- Program Line 115
+    set R=@RandomUniform 0 1,    !- Program Line 116
+    if handle>R,              !- Program Line 117
+    set blinds=0,             !- Program Line 118
+    else,                     !- Program Line 119
+    set lambda=@Exp 0-2.294+1.522*blinds,    !- Program Line 120
+    set db = @RandomUniform 0 1,    !- Program Line 121
+    set db = @ln (1-db),      !- Program Line 122
+    set lambda = (lambda^alpha)*(0-1),    !- Program Line 123
+    set db=db*lambda,         !- Program Line 124
+    set db=db^(1/alpha),      !- Program Line 125
+    set blinds = 1-db,        !- Program Line 126
+    endif,                    !- Program Line 127
+    endif,                    !- Program Line 128
+    endif,                    !- Program Line 129
+    if blinds>=0 && blinds< 0.5,    !- Program Line 130
+    set blinds1=0,            !- Program Line 131
+    elseif blinds>= 0.5,      !- Program Line 132
+    set blinds1=1,            !- Program Line 133
+    endif;                    !- Program Line 134
+
+EnergyManagementSystem:Subroutine,
+    mysubroutine,             !- Name
+    set luxtotal=@trendsum trendsumlux f,    !- Program Line 1
+    if count<>0,              !- Program Line 2
+    set luxmean= luxtotal/count,    !- Program Line 3
+    endif,                    !- Program Line 4
+    set luxmax= luxmean+439,    !- Program Line 5
+    set count = 0;            !- Program Line 6
+
+EnergyManagementSystem:GlobalVariable,
+    blinds,                   !- Erl Variable 1 Name
+    C1,                       !- Erl Variable 2 Name
+    C2,                       !- Erl Variable 3 Name
+    C3,                       !- Erl Variable 4 Name
+    C4,                       !- Erl Variable 5 Name
+    C5,                       !- Erl Variable 6 Name
+    C6,                       !- Erl Variable 7 Name
+    C7,                       !- Erl Variable 8 Name
+    C8,                       !- Erl Variable 9 Name
+    C9,                       !- Erl Variable 10 Name
+    C10,                      !- Erl Variable 11 Name
+    C11,                      !- Erl Variable 12 Name
+    C12,                      !- Erl Variable 13 Name
+    db;                       !- Erl Variable 14 Name
+
+EnergyManagementSystem:GlobalVariable,
+    occupancy,                !- Erl Variable 1 Name
+    A1,                       !- Erl Variable 2 Name
+    A2,                       !- Erl Variable 3 Name
+    A3,                       !- Erl Variable 4 Name
+    A4,                       !- Erl Variable 5 Name
+    A5,                       !- Erl Variable 6 Name
+    A6,                       !- Erl Variable 7 Name
+    A7,                       !- Erl Variable 8 Name
+    ARR_time,                 !- Erl Variable 9 Name
+    coffee1,                  !- Erl Variable 10 Name
+    cofee2,                   !- Erl Variable 11 Name
+    vac2,                     !- Erl Variable 12 Name
+    lunch;                    !- Erl Variable 13 Name
+
+EnergyManagementSystem:GlobalVariable,
+    lighting,                 !- Erl Variable 1 Name
+    B1,                       !- Erl Variable 2 Name
+    B2,                       !- Erl Variable 3 Name
+    B3,                       !- Erl Variable 4 Name
+    B4,                       !- Erl Variable 5 Name
+    B5,                       !- Erl Variable 6 Name
+    B6,                       !- Erl Variable 7 Name
+    vac1,                     !- Erl Variable 8 Name
+    DPT_time,                 !- Erl Variable 9 Name
+    ARR_event,                !- Erl Variable 10 Name
+    DPT_event,                !- Erl Variable 11 Name
+    presence,                 !- Erl Variable 12 Name
+    switch_off,               !- Erl Variable 13 Name
+    count,                    !- Erl Variable 14 Name
+    switch_on,                !- Erl Variable 15 Name
+    occswitch_off,            !- Erl Variable 16 Name
+    luxon,                    !- Erl Variable 17 Name
+    luxmean,                  !- Erl Variable 18 Name
+    occcounton,               !- Erl Variable 19 Name
+    luxtotal,                 !- Erl Variable 20 Name
+    T,                        !- Erl Variable 21 Name
+    x,                        !- Erl Variable 22 Name
+    f,                        !- Erl Variable 23 Name
+    luxmax,                   !- Erl Variable 24 Name
+    i,                        !- Erl Variable 25 Name
+    j,                        !- Erl Variable 26 Name
+    occcountoff,              !- Erl Variable 27 Name
+    occswitch_on,             !- Erl Variable 28 Name
+    countoff,                 !- Erl Variable 29 Name
+    counton,                  !- Erl Variable 30 Name
+    occGswitch_off,           !- Erl Variable 31 Name
+    Light_SP;                 !- Erl Variable 32 Name
+
+EnergyManagementSystem:GlobalVariable,
+    HSP,                      !- Erl Variable 1 Name
+    CSP,                      !- Erl Variable 2 Name
+    D1,                       !- Erl Variable 3 Name
+    D2,                       !- Erl Variable 4 Name
+    D3,                       !- Erl Variable 5 Name
+    D4,                       !- Erl Variable 6 Name
+    HTDiff_SP,                !- Erl Variable 7 Name
+    CLDiff_SP,                !- Erl Variable 8 Name
+    SP_Dcr,                   !- Erl Variable 9 Name
+    SP_Inc,                   !- Erl Variable 10 Name
+    P_decr,                   !- Erl Variable 11 Name
+    E1,                       !- Erl Variable 12 Name
+    E2,                       !- Erl Variable 13 Name
+    E3,                       !- Erl Variable 14 Name
+    E4;                       !- Erl Variable 15 Name
+
+EnergyManagementSystem:OutputVariable,
+    switchoffoutput,          !- Name
+    switch_off,               !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    occswitchoffoutput,       !- Name
+    occswitch_off,            !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    occcountonoutput,         !- Name
+    occcounton,               !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    occcountoffoutput,        !- Name
+    occcountoff,              !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    countonoutput,            !- Name
+    counton,                  !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    countoffoutput,           !- Name
+    countoff,                 !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    occswitchonoutput,        !- Name
+    occswitch_on,             !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    luxmaxoutput,             !- Name
+    luxmax,                   !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    luxtotaloutput,           !- Name
+    luxtotal,                 !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    foutput,                  !- Name
+    f,                        !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    Toutput,                  !- Name
+    T,                        !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    SystemTimestep;           !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    luxonoutput,              !- Name
+    luxon,                    !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    luxmeanoutput,            !- Name
+    luxmean,                  !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    switchonoutput,           !- Name
+    switch_on,                !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    countoutput,              !- Name
+    count,                    !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    occoutput,                !- Name
+    presence,                 !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    lightingoutput,           !- Name
+    lighting,                 !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    CSPoutput,                !- Name
+    CSP,                      !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    HSPoutput,                !- Name
+    HSP,                      !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    occGswitch_offoutput,     !- Name
+    occGswitch_off,           !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    SP_Incoutput,             !- Name
+    SP_Inc,                   !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    SP_Dcroutput,             !- Name
+    SP_Dcr,                   !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:OutputVariable,
+    Light_SPoutput,           !- Name
+    Light_SP,                 !- EMS Variable Name
+    Averaged,                 !- Type of Data in Variable
+    ZoneTimestep;             !- Update Frequency
+
+EnergyManagementSystem:TrendVariable,
+    trendvaluecount,          !- Name
+    count,                    !- EMS Variable Name
+    52560;                    !- Number of Timesteps to be Logged
+
+EnergyManagementSystem:TrendVariable,
+    trendsumlux,              !- Name
+    luxon,                    !- EMS Variable Name
+    52560;                    !- Number of Timesteps to be Logged
+
+Output:VariableDictionary,
+    regular,                  !- Key Field
+    Name;                     !- Sort Option
+
+Output:Table:SummaryReports,
+    AllSummary;               !- Report 1 Name
+
+OutputControl:Table:Style,
+    Comma;                    !- Column Separator
+
+OutputControl:ReportingTolerances,
+    0.2,                      !- Tolerance for Time Heating Setpoint Not Met
+    0.2;                      !- Tolerance for Time Cooling Setpoint Not Met
+
+Output:Variable,
+    *,                        !- Key Value
+    occswitchoffoutput,       !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    switchoffoutput,          !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    occcountonoutput,         !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    occcountoffoutput,        !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    countonoutput,            !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    countoffoutput,           !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    occswitchonoutput,        !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Daylighting Reference Point 1 Illuminance,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Lights Electric Energy,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Daylighting Reference Point 1 Illuminance,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    luxmaxoutput,             !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    luxtotaloutput,           !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    foutput,                  !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Toutput,                  !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air System Sensible Heating Energy,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air System Sensible Cooling Energy,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    luxonoutput,              !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    luxmeanoutput,            !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    countoutput,              !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    switchonoutput,           !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    occoutput,                !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    lightingoutput,           !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Lights Electric Energy,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Ideal Loads Zone Total Heating Energy,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Ideal Loads Zone Total Cooling Energy,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    CSPoutput,                !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    HSPoutput,                !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    occGswitch_offoutput,     !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    SP_Incoutput,             !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    SP_Dcroutput,             !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Light_SPoutput,           !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Mean Air Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Daylighting Reference Point 1 Illuminance,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Outdoor Air Drybulb Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Ideal Loads Supply Air Total Heating Rate,    !- Variable Name
+    Annual;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Ideal Loads Supply Air Total Cooling Rate,    !- Variable Name
+    Annual;                   !- Reporting Frequency
+
+Output:SQLite,
+    SimpleAndTabular;         !- Option Type
+
+Output:Diagnostics,
+    DisplayExtraWarnings;     !- Key 1
