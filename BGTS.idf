@@ -1717,7 +1717,7 @@ EnergyManagementSystem:Program,
     endif,                   !- A13
     set SP_Dcr = 0,          !- A14
     set SP_Inc = 0,          !- A15
-    set Tempsensor = 50
+    set Tempsensor = 25,
     if Minute == 30,         !- A16
     if presence == 1,        !- A17
     set handle=E1+E2*Tempsensor,  !- A18
