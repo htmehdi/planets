@@ -1349,7 +1349,7 @@ EnergyManagementSystem:Program,
     set count=0,              !- Program Line 4
     set counton=0,            !- Program Line 5
     set countoff=0,           !- Program Line 6
-    set x=83.0,               !- Program Line 7
+    set x=28.0,               !- Program Line 7
     set T=0,                  !- Program Line 8
     set i=1,                  !- Program Line 9
     set occcounton=0,         !- Program Line 10
@@ -1572,6 +1572,7 @@ EnergyManagementSystem:Program,
     ENDIF,                    !- Program Line 9
     if Hour == 0,             !- Program Line 10
     set CSP=23,               !- Program Line 11
+    set HSP = 22,
     endif,                    !- Program Line 12
     set SP_Dcr = 0,           !- Program Line 13
     set SP_Inc = 0,           !- Program Line 14
