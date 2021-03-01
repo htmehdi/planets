@@ -1491,7 +1491,7 @@ EnergyManagementSystem:Program,
     set count=0,             !- A5
     set counton=0,           !- A6
     set countoff=0,          !- A7
-    set x=83.0,              !- A8
+    set x=28.0,              !- A8
     set T=0,                 !- A9
     set i=1,                 !- A10
     set occcounton=0,        !- A11
@@ -1714,6 +1714,7 @@ EnergyManagementSystem:Program,
     ENDIF,                   !- A10
     if Hour == 0,            !- A11
     set CSP=23,              !- A12
+    set HSP=22,
     endif,                   !- A13
     set SP_Dcr = 0,          !- A14
     set SP_Inc = 0,          !- A15
