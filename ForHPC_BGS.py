@@ -69,7 +69,7 @@ def main(X):
     from eppy.modeleditor import IDF
     iddfile = path+ '/EP-8-9/EnergyPlus-8-9-0/Energy+.idd'
     IDF.setiddname(iddfile)
-    epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    epwfile = path+'/Final8Var4BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
 
     #mapping for maximum amount for threshold
     a1=np.arange(300,701,20)
@@ -98,8 +98,8 @@ def main(X):
     i1=np.arange(0.2,0.71,0.05)
     i2=i1[int(X[8])]
     #w = np.asscalar(X)
-    fname1 = path +'/Final8Var3BG/BGM.idf'
-    epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var4BG/BGT.idf'
+    epwfile = path+'/Final8Var4BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
 
     idf = IDF(fname1,epwfile)
     #the second variable
@@ -127,31 +127,31 @@ def main(X):
     #blind visible Transmittance
     Blind_material=idf.idfobjects['WindowMaterial:Shade'][0]
     Blind_material.Visible_Transmittance=h2
-    idf.saveas(path +'/Final8Var3BG/BGN.idf')
+    idf.saveas(path +'/Final8Var4BG/BGT.idf')
     #WWr
     from geomeppy import IDF
     
-    fname2 = path +'/Final8Var3BG/BGM.idf'
+    fname2 = path +'/Final8Var4BG/BGT.idf'
     idf1 = IDF(fname2,epwfile)
     idf1.set_wwr(wwr=0, wwr_map={180: i2}, force=True, construction= "Exterior Window")
-    idf1.saveas(path +'/Final8Var3BG/BGM.idf')
+    idf1.saveas(path +'/Final8Var4BG/BGT.idf')
     #setting wshCTRL
     from eppy.modeleditor import IDF
-    fname1 = path +'/Final8Var3BG/BGM.idf'
-    epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var4BG/BGT.idf'
+    epwfile = path+'/Final8Var4BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     idf = IDF(fname1,epwfile)
     sub_surface = idf.idfobjects['FenestrationSurface:Detailed'][0]
     sub_surface.Shading_Control_Name="wshCTRL1"
-    idf.saveas(path +'/Final8Var3BG/BGM.idf')
+    idf.saveas(path +'/Final8Var4BG/BGT.idf')
     
     fnames=[]
     for i in range (1,33):
-        fname1 = path +'/Final8Var3BG/BGM.idf'
-        epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+        fname1 = path +'/Final8Var4BG/BGT.idf'
+        epwfile = path +'/Final8Var4BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
-        idf.saveas(path +'/Final8Var3BG/BGM%d.idf'%(i))
+        idf.saveas(path +'/Final8Var4BG/BGT%d.idf'%(i))
         
-        fnames.append(path +'/Final8Var3BG/BGM%d.idf'%(i))
+        fnames.append(path +'/Final8Var4BG/BGT%d.idf'%(i))
         
     from eppy.modeleditor import IDF
     from eppy.runner.run_functions import runIDFs
@@ -166,14 +166,14 @@ def main(X):
     TOFF=[]
    
     for i in range (1,33):
-        Data=pd.read_csv(path +'/Final8Var3BG/BGM%d.csv'%(i))
+        Data=pd.read_csv(path +'/Final8Var4BG/BGT%d.csv'%(i))
         ELC=Data['LIGHT:Lights Electric Energy [J](TimeStep)'].sum()*2.78*10**(-7)
         ON=Data['EMS:switchonoutput [](TimeStep)'].sum()
         OFF=Data['EMS:switchoffoutput [](TimeStep)'].sum()
         TRELC.append(ELC)
         TON.append(ON)
         TOFF.append(OFF)
-        file = '/Final8Var3BG/BGM%dTable.csv'%(i)
+        file = '/Final8Var4BG/BGT%dTable.csv'%(i)
         f = open(path+file,'rt')
 
         reader = csv.reader(f)
