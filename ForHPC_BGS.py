@@ -145,7 +145,7 @@ def main(X):
     idf.saveas(path +'/Final8Var3BG/BGM.idf')
     
     fnames=[]
-    for i in range (1,3):
+    for i in range (1,33):
         fname1 = path +'/Final8Var3BG/BGM.idf'
         epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
