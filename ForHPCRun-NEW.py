@@ -69,7 +69,7 @@ def main(X):
     from eppy.modeleditor import IDF
     iddfile = path+ '/EP-8-9/EnergyPlus-8-9-0/Energy+.idd'
     IDF.setiddname(iddfile)
-    epwfile = path+'/Final8Var3/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    epwfile = path+'/Final8Var4/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
 
     a = X[0]
     # mapping for luxmean
@@ -96,8 +96,8 @@ def main(X):
     i1=np.arange(0.2,0.71,0.05)
     i2=i1[int(X[8])]
     #w = np.asscalar(X)
-    fname1 = path +'/Final8Var3/M1Final3OCCSOV.idf'
-    epwfile = path+'/Final8Var3/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var4/M1Final3OCCSOV.idf'
+    epwfile = path+'/Final8Var4/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
 
     idf = IDF(fname1,epwfile)
     occlightingmodel = idf.idfobjects['EnergyManagementsystem:program'][4]
@@ -123,33 +123,33 @@ def main(X):
     Blind_material=idf.idfobjects['WindowMaterial:Shade'][0]
     Blind_material.Visible_Transmittance=h2
     
-    idf.saveas(path +'/Final8Var3/M1Final3OCCSOV.idf')
+    idf.saveas(path +'/Final8Var4/M1Final3OCCSOV.idf')
 
     #WWr
     from geomeppy import IDF
     
-    fname2 = path +'/Final8Var3/M1Final3OCCSOV.idf'
+    fname2 = path +'/Final8Var4/M1Final3OCCSOV.idf'
     idf1 = IDF(fname2,epwfile)
     idf1.set_wwr(wwr=0, wwr_map={180: i2}, force=True, construction= "Exterior Window")
-    idf1.saveas(path +'/Final8Var3/M1Fianl3OCCSOV.idf')
+    idf1.saveas(path +'/Final8Var4/M1Fianl3OCCSOV.idf')
     
     #setting wshCTRL
     from eppy.modeleditor import IDF
-    fname1 = path +'/Final8Var3/M1Final3OCCSOV.idf'
-    epwfile = path+'/Final8Var3/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var4/M1Final3OCCSOV.idf'
+    epwfile = path+'/Final8Var4/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     idf = IDF(fname1,epwfile)
     sub_surface = idf.idfobjects['FenestrationSurface:Detailed'][0]
     sub_surface.Shading_Control_Name="wshCTRL1"
-    idf.saveas(path +'/Final8Var3/M1Final3OCCSOV.idf')
+    idf.saveas(path +'/Final8Var4/M1Final3OCCSOV.idf')
     
     fnames=[]
     for i in range (1,33):
-        fname1 = path +'/Final8Var3/M1Final3OCCSOV.idf'
-        epwfile = path+'/Final8Var3/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+        fname1 = path +'/Final8Var4/M1Final3OCCSOV.idf'
+        epwfile = path+'/Final8Var4/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
-        idf.saveas(path +'/Final8Var3/M%dFinal3OCCSOV.idf'%(i))
+        idf.saveas(path +'/Final8Var4/M%dFinal3OCCSOV.idf'%(i))
         
-        fnames.append(path +'/Final8Var3/M%dFinal3OCCSOV.idf'%(i))
+        fnames.append(path +'/Final8Var4/M%dFinal3OCCSOV.idf'%(i))
 
         
     from eppy.modeleditor import IDF
@@ -165,14 +165,14 @@ def main(X):
     TOFF=[]
    
     for i in range (1,33):
-        Data=pd.read_csv(path +'/Final8Var3/M%dFinal3OCCSOV.csv'%(i))
+        Data=pd.read_csv(path +'/Final8Var4/M%dFinal3OCCSOV.csv'%(i))
         ELC=Data['LIGHT:Lights Electric Energy [J](TimeStep)'].sum()*2.78*10**(-7)
         ON=Data['EMS:countonoutput [](TimeStep)'].iloc[-1]
         OFF=Data['EMS:countoffoutput [](TimeStep)'].iloc[-1]
         TRELC.append(ELC)
         TON.append(ON)
         TOFF.append(OFF)
-        f = open(path+'/Final8Var3/M%dFinal3OCCSOVTable.csv'%(i))
+        f = open(path+'/Final8Var4/M%dFinal3OCCSOVTable.csv'%(i))
         reader = csv.reader(f)
         csv_list = []
         for l in reader:
