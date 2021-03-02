@@ -173,8 +173,9 @@ def main(X):
         TRELC.append(ELC)
         TON.append(ON)
         TOFF.append(OFF)
-        
-        f = open(path +'/Final8Var3BG/BGM%d.idf'%(i))
+        file = '/Final8Var3BG/BGM%dTable.csv'%(i)
+        f = open(path+file,'rt')
+
         reader = csv.reader(f)
         csv_list = []
         for l in reader:
