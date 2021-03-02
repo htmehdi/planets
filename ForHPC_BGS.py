@@ -69,13 +69,13 @@ def main(X):
     from eppy.modeleditor import IDF
     iddfile = path+ '/EP-8-9/EnergyPlus-8-9-0/Energy+.idd'
     IDF.setiddname(iddfile)
-    epwfile = path+'/Final8Var2BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
 
     #mapping for maximum amount for threshold
     a1=np.arange(300,701,20)
     a2 = a1[int(X[0])]*0.0929
     # mapping for minimum amount for threshold
-    b1=np.arange(0,30,20)
+    b1=np.arange(0,300,20)
     b2= b1[int(X[1])]*0.0929
     #mapping for window VT
     c1=np.arange(0.3,0.81,0.05)
@@ -98,8 +98,8 @@ def main(X):
     i1=np.arange(0.2,0.71,0.05)
     i2=i1[int(X[8])]
     #w = np.asscalar(X)
-    fname1 = path +'/Final8Var2BG/BGS.idf'
-    epwfile = path+'/Final8Var2BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var3BG/BGM.idf'
+    epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
 
     idf = IDF(fname1,epwfile)
     #the second variable
@@ -127,32 +127,31 @@ def main(X):
     #blind visible Transmittance
     Blind_material=idf.idfobjects['WindowMaterial:Shade'][0]
     Blind_material.Visible_Transmittance=h2
-    idf.saveas('path +'/Final8Var2BG/BGS.idf'')
+    idf.saveas(path +'/Final8Var3BG/BGN.idf')
     #WWr
     from geomeppy import IDF
-    #iddfile = "/EnergyPlusV8-9-0/Energy+.idd"
-    #IDF.setiddname(iddfile)
-    fname2 = path +'/Final8Var2BG/BGS.idf'
+    
+    fname2 = path +'/Final8Var3BG/BGM.idf'
     idf1 = IDF(fname2,epwfile)
     idf1.set_wwr(wwr=0, wwr_map={180: i2}, force=True, construction= "Exterior Window")
-    idf1.saveas(path +'/Final8Var2BG/BGS.idf')
+    idf1.saveas(path +'/Final8Var3BG/BGM.idf')
     #setting wshCTRL
     from eppy.modeleditor import IDF
-    fname1 = path +'/Final8Var2BG/BGS.idf'
-    epwfile = path+'/Final8Var2BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var3BG/BGM.idf'
+    epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     idf = IDF(fname1,epwfile)
     sub_surface = idf.idfobjects['FenestrationSurface:Detailed'][0]
     sub_surface.Shading_Control_Name="wshCTRL1"
-    idf.saveas(path +'/Final8Var2BG/BGS.idf')
+    idf.saveas(path +'/Final8Var3BG/BGM.idf')
     
     fnames=[]
     for i in range (1,3):
-        fname1 = path +'/Final8Var2BG/BGS.idf'
-        epwfile = path+'/Final8Var2BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+        fname1 = path +'/Final8Var3BG/BGM.idf'
+        epwfile = path+'/Final8Var3BG/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
-        idf.saveas(path +'/Final8Var2BG/BGS%d.idf'%(i))
+        idf.saveas(path +'/Final8Var3BG/BGM%d.idf'%(i))
         
-        fnames.append(path +'/Final8Var2BG/BGS%d.idf'%(i))
+        fnames.append(path +'/Final8Var3BG/BGM%d.idf'%(i))
         
     from eppy.modeleditor import IDF
     from eppy.runner.run_functions import runIDFs
@@ -167,7 +166,7 @@ def main(X):
     TOFF=[]
    
     for i in range (1,33):
-        Data=pd.read_csv('BGL%d.csv'%(i))
+        Data=pd.read_csv(path +'/Final8Var3BG/BGM%d.csv'%(i))
         ELC=Data['LIGHT:Lights Electric Energy [J](TimeStep)'].sum()*2.78*10**(-7)
         ON=Data['EMS:switchonoutput [](TimeStep)'].sum()
         OFF=Data['EMS:switchoffoutput [](TimeStep)'].sum()
@@ -175,7 +174,7 @@ def main(X):
         TON.append(ON)
         TOFF.append(OFF)
         
-        f = open(path +'/Final8Var2BG/BGS%d.idf'%(i),'rt')
+        f = open(path +'/Final8Var3BG/BGM%d.idf'%(i),'rt')
         reader = csv.reader(f)
         csv_list = []
         for l in reader:
@@ -195,30 +194,18 @@ def main(X):
     return np.sum(TEUI)
 
 
-# import time
-# starttime = time.time()
-# if __name__ == '__main__':
-    
-    
-#    main()
-# print('Time taken = {} seconds'.format(time.time() - starttime))
-    
-
-
-# In[5]:
 
 
 algorithm_param = {'max_num_iteration': 50,'population_size':15,'mutation_probability':0.35,'elit_ratio': 0.05,'crossover_probability': 0.7,'parents_portion': 0.3,'crossover_type':'uniform','max_iteration_without_improv':None}
 
 
-# In[ ]:
+
 
 
 varbound= np.array([[0,20],[0,14],[0,10],[0,10],[0,10],[0,10],[0,3],[0,3],[0,10]])
-#varbound=np.array[np.arange(1,4,1),np.arange(0,20,5)]
-#varbound=np.array[A,B]
+
 vartype=np.array([['int'],['int'],['int'],['int'],['int'],['int'],['int'],['int'],['int']])
-#np.array([[1,5]])
+
 
 model=ga(function=main,dimension=9,variable_type_mixed=vartype,variable_boundaries=varbound, function_timeout=20000,
          algorithm_parameters=algorithm_param)
