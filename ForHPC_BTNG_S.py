@@ -69,7 +69,7 @@ def main(X):
     from eppy.modeleditor import IDF
     iddfile = path+ '/EP-8-9/EnergyPlus-8-9-0/Energy+.idd'
     IDF.setiddname(iddfile)
-    epwfile = path+'/Final8Var3BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    epwfile = path+'/Final8Var4BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     #mapping for heating maximum threshold 
     maxh=np.arange(22,30.1,0.5)
     a = maxh[int(X[0])]
@@ -127,8 +127,8 @@ def main(X):
     s1=np.arange(0.05,0.21,0.05)
     s2=s1[int(X[18])]
     
-    fname1 = path +'/Final8Var3BTN/BT_NG_M.idf'
-    epwfile = path+'/Final8Var3BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var4BTN/BT_NG_T.idf'
+    epwfile = path+'/Final8Var4BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     
     idf = IDF(fname1,epwfile)
     occthermostatmodel = idf.idfobjects['EnergyManagementsystem:program'][8]
@@ -189,32 +189,32 @@ def main(X):
     Blind_material=idf.idfobjects['WindowMaterial:Shade'][0]
     Blind_material.Visible_Transmittance=s2
     
-    idf.saveas(path +'/Final8Var3BTN/BT_NG_M.idf')
+    idf.saveas(path +'/Final8Var4BTN/BT_NG_T.idf')
   
     #WWr
     from geomeppy import IDF
     
-    fname2 = path +'/Final8Var3BTN/BT_NG_M.idf'
+    fname2 = path +'/Final8Var4BTN/BT_NG_T.idf'
     idf1 = IDF(fname2,epwfile)
     idf1.set_wwr(wwr=0, wwr_map={180: i2}, force=True, construction= "Exterior Window")
-    idf1.saveas(path +'/Final8Var3BTN/BT_NG_M.idf')
+    idf1.saveas(path +'/Final8Var4BTN/BT_NG_T.idf')
     #setting wshCTRL
     from eppy.modeleditor import IDF
-    fname1 = path +'/Final8Var3BTN/BT_NG_M.idf'
-    epwfile = path+'/Final8Var3BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/Final8Var4BTN/BT_NG_T.idf'
+    epwfile = path+'/Final8Var4BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     idf = IDF(fname1,epwfile)
     sub_surface = idf.idfobjects['FenestrationSurface:Detailed'][0]
     sub_surface.Shading_Control_Name="wshCTRL1"
-    idf.saveas(path +'/Final8Var3BTN/BT_NG_M.idf')
+    idf.saveas(path +'/Final8Var4BTN/BT_NG_T.idf')
     
     fnames=[]
     for i in range (1,33):
-        fname1 = path +'/Final8Var3BTN/BT_NG_M.idf'
-        epwfile = path+'/Final8Var3BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+        fname1 = path +'/Final8Var4BTN/BT_NG_T.idf'
+        epwfile = path+'/Final8Var4BTN/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
-        idf.saveas(path +'/Final8Var3BTN/BT_NG_M%d.idf'%(i))
+        idf.saveas(path +'/Final8Var4BTN/BT_NG_T%d.idf'%(i))
         
-        fnames.append(path +'/Final8Var3BTN/BT_NG_M%d.idf'%(i))
+        fnames.append(path +'/Final8Var4BTN/BT_NG_T%d.idf'%(i))
         
     from eppy.modeleditor import IDF
     from eppy.runner.run_functions import runIDFs
@@ -233,7 +233,7 @@ def main(X):
     TOFF=[]
    
     for i in range (1,33):
-        Data=pd.read_csv(path +'/Final8Var3BTN/BT_NG_M%d.csv'%(i))
+        Data=pd.read_csv(path +'/Final8Var4BTN/BT_NG_T%d.csv'%(i))
         
         CENERGY=Data['THERMAL ZONE 1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Zone Total Cooling Energy [J](TimeStep)'].sum()*2.78*10**(-7)
         HENERGY=Data['THERMAL ZONE 1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Zone Total Heating Energy [J](TimeStep)'].sum()*2.78*10**(-7)
@@ -250,7 +250,7 @@ def main(X):
         TINC.append(INC)
         TDCR.append(DCR)
         
-        file = path +'/Final8Var3BTN/BT_NG_M%dTable.csv'%(i)
+        file = path +'/Final8Var4BTN/BT_NG_T%dTable.csv'%(i)
         f = open(file,'rt')
         reader = csv.reader(f)
         csv_list = []
