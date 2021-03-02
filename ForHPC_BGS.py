@@ -75,7 +75,7 @@ def main(X):
     a1=np.arange(300,701,20)
     a2 = a1[int(X[0])]*0.0929
     # mapping for minimum amount for threshold
-    b1=np.arange(0,300,20)
+    b1=np.arange(0,301,20)
     b2= b1[int(X[1])]*0.0929
     #mapping for window VT
     c1=np.arange(0.3,0.81,0.05)
@@ -174,7 +174,7 @@ def main(X):
         TON.append(ON)
         TOFF.append(OFF)
         
-        f = open(path +'/Final8Var3BG/BGM%d.idf'%(i),'rt')
+        f = open(path +'/Final8Var3BG/BGM%d.idf'%(i))
         reader = csv.reader(f)
         csv_list = []
         for l in reader:
@@ -202,7 +202,7 @@ algorithm_param = {'max_num_iteration': 50,'population_size':15,'mutation_probab
 
 
 
-varbound= np.array([[0,20],[0,14],[0,10],[0,10],[0,10],[0,10],[0,3],[0,3],[0,10]])
+varbound= np.array([[0,20],[0,15],[0,10],[0,10],[0,10],[0,10],[0,3],[0,3],[0,10]])
 
 vartype=np.array([['int'],['int'],['int'],['int'],['int'],['int'],['int'],['int'],['int']])
 
