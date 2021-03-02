@@ -75,7 +75,7 @@ def main(X):
     a1=np.arange(300,701,20)
     a2 = a1[int(X[0])]*0.0929
     # mapping for minimum amount for threshold
-    b1=np.arange(0,300,20)
+    b1=np.arange(0,301,20)
     b2= b1[int(X[1])]*0.0929
     #mapping for window VT
     c1=np.arange(0.3,0.81,0.05)
