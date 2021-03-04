@@ -170,11 +170,11 @@ def main(X):
     
     #Nagy OCC
     Gunayocclightingmodel = idf.idfobjects['EnergyManagementsystem:program'][6]
-    Gunayocclightingmodel.Program_Line_24 ="IF Light_SP <" + str(n2) 
-    Gunayocclightingmodel.Program_Line_25 =" set Light_SP =" + str(n2)
+    Gunayocclightingmodel.Program_Line_27 ="IF Light_SP <" + str(n2) 
+    Gunayocclightingmodel.Program_Line_28 =" set Light_SP =" + str(n2)
     # the first variable:
-    Gunayocclightingmodel.Program_Line_26 ="ELSEIF Light_SP>" + str(m2)
-    Gunayocclightingmodel.Program_Line_27 ="set Light_SP =" + str(m2)
+    Gunayocclightingmodel.Program_Line_29 ="ELSEIF Light_SP>" + str(m2)
+    Gunayocclightingmodel.Program_Line_30 ="set Light_SP =" + str(m2)
     # the third variable:
     Windowmaterial = idf.idfobjects['WindowMaterial:SimpleGlazingSystem'][0]
     Windowmaterial.Visible_Transmittance=o2
