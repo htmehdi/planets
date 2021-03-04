@@ -1621,6 +1621,9 @@ EnergyManagementSystem:Program,
     set D2 = 0-0.1,          !- A4
     set occGswitch_off=0,    !- A5
     ENDIF,                   !- A6
+    IF luxsensor > 9000,      !- Program Line 6
+    set luxsensor = 9000,     !- Program Line 7
+    ENDIF,                    !- Program Line 8
     set occGswitch_off=0,    !- A7
     If switch_on == 1,       !- A8
     set h = D1 + D2*luxsensor*0.0929,  !- A9
