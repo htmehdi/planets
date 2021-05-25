@@ -69,7 +69,7 @@ def evaluate_l(X):
     from eppy.modeleditor import IDF
     iddfile = path+ '/EP-8-9/EnergyPlus-8-9-0/Energy+.idd'
     IDF.setiddname(iddfile)
-    epwfile = path+'/SenBTNT_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     #mapping for heating maximum threshold 
     #maxh=np.arange(22,30.1,0.5)
     a = 30
@@ -158,8 +158,10 @@ def evaluate_l(X):
     
     #for time interval(TI)
    
-    #TIS = "Minute==30 || Minute==60"
-    #"""
+    TIS = "Minute==30 || Minute==60"
+    
+    TIL= "Minute==30 || Minute==60"
+    """
     # time interval for Light BG
     if X==1:
         TIL= "Minute==10 || Minute==20 || Minute==30 || Minute==40 || Minute==50 || Minute==60"
@@ -182,10 +184,10 @@ def evaluate_l(X):
     else:
         TIL= "CurrentTime==0.0 || CurrentTime==4.0 || CurrentTime==8.0 || CurrentTime==12.0 || CurrentTime==16.0 || CurrentTime==20.0 || CurrentTime==24.0"
         
-    #"""  
+    """  
 
-    fname1 = path +'/SenBTNT_New/BT_NG_T_Tr.idf'
-    epwfile = path+'/SenBTNT_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+    epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     
     idf = IDF(fname1,epwfile)
     occthermostatmodel = idf.idfobjects['EnergyManagementsystem:program'][8]
@@ -237,15 +239,15 @@ def evaluate_l(X):
    # BG Light OCC
    # lower boundry for BG light
     Gunayocclightingmodel = idf.idfobjects['EnergyManagementsystem:program'][6]
-    Gunayocclightingmodel.Program_Line_25 ="IF Light_SP <" + str(z1) #maybe we can use directly "set x=" + str(X[0])
-    Gunayocclightingmodel.Program_Line_26 =" set Light_SP =" + str(z1)
+    Gunayocclightingmodel.Program_Line_28 ="IF Light_SP <" + str(z1) #maybe we can use directly "set x=" + str(X[0])
+    Gunayocclightingmodel.Program_Line_29 =" set Light_SP =" + str(z1)
     # upper boundry for BG light:
-    Gunayocclightingmodel.Program_Line_27 ="ELSEIF Light_SP>" + str(z2)
-    Gunayocclightingmodel.Program_Line_28 ="set Light_SP =" + str(z2)
+    Gunayocclightingmodel.Program_Line_30 ="ELSEIF Light_SP>" + str(z2)
+    Gunayocclightingmodel.Program_Line_31 ="set Light_SP =" + str(z2)
     # Learning rate for BG light
     Gunayocclightingmodel.Program_Line_5= "set LRL = " + str(LRL)
     #Time interval for BG light
-    Gunayocclightingmodel.Program_Line_15= "If " + TIL
+    Gunayocclightingmodel.Program_Line_18= "If " + TIL
     
     # the third variable:
     Windowmaterial = idf.idfobjects['WindowMaterial:SimpleGlazingSystem'][0]
@@ -264,32 +266,32 @@ def evaluate_l(X):
     Blind_material=idf.idfobjects['WindowMaterial:Shade'][0]
     Blind_material.Visible_Transmittance=s2
     
-    idf.saveas(path +'/SenBTNT_New/BT_NG_T_Tr.idf')
+    idf.saveas(path +'/SenBTBG_New/BT_NG_T_L.idf')
   
     #WWr
     from geomeppy import IDF
     
-    fname2 = path +'/SenBTNT_New/BT_NG_T_Tr.idf'
+    fname2 = path +'/SenBTBG_New/BT_NG_T_L.idf'
     idf1 = IDF(fname2,epwfile)
     idf1.set_wwr(wwr=0, wwr_map={180: i2}, force=True, construction= "Exterior Window")
-    idf1.saveas(path +'/SenBTNT_New/BT_NG_T_Tr.idf')
+    idf1.saveas(path +'/SenBTBG_New/BT_NG_T_L.idf')
     #setting wshCTRL
     from eppy.modeleditor import IDF
-    fname1 = path +'/SenBTNT_New/BT_NG_T_Tr.idf'
-    epwfile = path+'/SenBTNT_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+    fname1 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+    epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     idf = IDF(fname1,epwfile)
     sub_surface = idf.idfobjects['FenestrationSurface:Detailed'][0]
     sub_surface.Shading_Control_Name="wshCTRL1"
-    idf.saveas(path +'/SenBTNT_New/BT_NG_T_Tr.idf')
+    idf.saveas(path +'/SenBTBG_New/BT_NG_T_L.idf')
     
     fnames=[]
     for i in range (1,33):
-        fname1 = path +'/SenBTNT_New/BT_NG_T_Tr.idf'
-        epwfile = path+'/SenBTNT_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
+        fname1 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+        epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
-        idf.saveas(path +'/SenBTNT_New/BT_NG_T_Tr%d.idf'%(i))
+        idf.saveas(path +'/SenBTBG_New/BT_NG_T_L%d.idf'%(i))
         
-        fnames.append(path +'/SenBTNT_New/BT_NG_T_Tr%d.idf'%(i))
+        fnames.append(path +'/SenBTBG_New/BT_NG_T_L%d.idf'%(i))
         
     from eppy.modeleditor import IDF
     from eppy.runner.run_functions import runIDFs
@@ -308,7 +310,7 @@ def evaluate_l(X):
     TOFF=[]
    
     for i in range (1,33):
-        Data=pd.read_csv(path +'/SenBTNT_New/BT_NG_T_Tr%d.csv'%(i))
+        Data=pd.read_csv(path +'/SenBTBG_New/BT_NG_T_L%d.csv'%(i))
         
         #CENERGY=Data['THERMAL ZONE 1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Zone Total Cooling Energy [J](TimeStep)'].sum()*2.78*10**(-7)
         #HENERGY=Data['THERMAL ZONE 1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Zone Total Heating Energy [J](TimeStep)'].sum()*2.78*10**(-7)
@@ -325,7 +327,7 @@ def evaluate_l(X):
         TINC.append(INC)
         TDCR.append(DCR)
         
-        file = path +'/SenBTNT_New/BT_NG_T_Tr%dTable.csv'%(i)
+        file = path +'/SenBTBG_New/BT_NG_T_L%dTable.csv'%(i)
         f = open(file,'rt')
         reader = csv.reader(f)
         csv_list = []
