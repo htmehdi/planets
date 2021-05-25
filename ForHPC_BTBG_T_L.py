@@ -186,7 +186,7 @@ def evaluate_l(X):
         
     """  
 
-    fname1 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+    fname1 = path +'/SenBTBG_New/BT_BG_T_L.idf'
     epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     
     idf = IDF(fname1,epwfile)
