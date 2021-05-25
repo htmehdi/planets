@@ -266,32 +266,32 @@ def evaluate_l(X):
     Blind_material=idf.idfobjects['WindowMaterial:Shade'][0]
     Blind_material.Visible_Transmittance=s2
     
-    idf.saveas(path +'/SenBTBG_New/BT_NG_T_L.idf')
+    idf.saveas(path +'/SenBTBG_New/BT_BG_T_L.idf')
   
     #WWr
     from geomeppy import IDF
     
-    fname2 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+    fname2 = path +'/SenBTBG_New/BT_BG_T_L.idf'
     idf1 = IDF(fname2,epwfile)
     idf1.set_wwr(wwr=0, wwr_map={180: i2}, force=True, construction= "Exterior Window")
-    idf1.saveas(path +'/SenBTBG_New/BT_NG_T_L.idf')
+    idf1.saveas(path +'/SenBTBG_New/BT_BG_T_L.idf')
     #setting wshCTRL
     from eppy.modeleditor import IDF
-    fname1 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+    fname1 = path +'/SenBTBG_New/BT_BG_T_L.idf'
     epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
     idf = IDF(fname1,epwfile)
     sub_surface = idf.idfobjects['FenestrationSurface:Detailed'][0]
     sub_surface.Shading_Control_Name="wshCTRL1"
-    idf.saveas(path +'/SenBTBG_New/BT_NG_T_L.idf')
+    idf.saveas(path +'/SenBTBG_New/BT_BG_T_L.idf')
     
     fnames=[]
     for i in range (1,33):
-        fname1 = path +'/SenBTBG_New/BT_NG_T_L.idf'
+        fname1 = path +'/SenBTBG_New/BT_BG_T_L.idf'
         epwfile = path+'/SenBTBG_New/CAN_PQ_Montreal.Intl.AP.716270_CWEC.epw'
         idf = IDF(fname1,epwfile)
-        idf.saveas(path +'/SenBTBG_New/BT_NG_T_L%d.idf'%(i))
+        idf.saveas(path +'/SenBTBG_New/BT_BG_T_L%d.idf'%(i))
         
-        fnames.append(path +'/SenBTBG_New/BT_NG_T_L%d.idf'%(i))
+        fnames.append(path +'/SenBTBG_New/BT_BG_T_L%d.idf'%(i))
         
     from eppy.modeleditor import IDF
     from eppy.runner.run_functions import runIDFs
@@ -310,7 +310,7 @@ def evaluate_l(X):
     TOFF=[]
    
     for i in range (1,33):
-        Data=pd.read_csv(path +'/SenBTBG_New/BT_NG_T_L%d.csv'%(i))
+        Data=pd.read_csv(path +'/SenBTBG_New/BT_BG_T_L%d.csv'%(i))
         
         #CENERGY=Data['THERMAL ZONE 1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Zone Total Cooling Energy [J](TimeStep)'].sum()*2.78*10**(-7)
         #HENERGY=Data['THERMAL ZONE 1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Zone Total Heating Energy [J](TimeStep)'].sum()*2.78*10**(-7)
@@ -327,7 +327,7 @@ def evaluate_l(X):
         TINC.append(INC)
         TDCR.append(DCR)
         
-        file = path +'/SenBTBG_New/BT_NG_T_L%dTable.csv'%(i)
+        file = path +'/SenBTBG_New/BT_BG_T_L%dTable.csv'%(i)
         f = open(file,'rt')
         reader = csv.reader(f)
         csv_list = []
