@@ -239,15 +239,15 @@ def evaluate_l(X):
    # BG Light OCC
    # lower boundry for BG light
     Gunayocclightingmodel = idf.idfobjects['EnergyManagementsystem:program'][6]
-    Gunayocclightingmodel.Program_Line_28 ="IF Light_SP <" + str(z1) #maybe we can use directly "set x=" + str(X[0])
-    Gunayocclightingmodel.Program_Line_29 =" set Light_SP =" + str(z1)
+    Gunayocclightingmodel.Program_Line_29 ="IF Light_SP <" + str(z1) #maybe we can use directly "set x=" + str(X[0])
+    Gunayocclightingmodel.Program_Line_30 =" set Light_SP =" + str(z1)
     # upper boundry for BG light:
-    Gunayocclightingmodel.Program_Line_30 ="ELSEIF Light_SP>" + str(z2)
-    Gunayocclightingmodel.Program_Line_31 ="set Light_SP =" + str(z2)
+    Gunayocclightingmodel.Program_Line_31 ="ELSEIF Light_SP>" + str(z2)
+    Gunayocclightingmodel.Program_Line_32 ="set Light_SP =" + str(z2)
     # Learning rate for BG light
-    Gunayocclightingmodel.Program_Line_5= "set LRL = " + str(LRL)
+    Gunayocclightingmodel.Program_Line_6= "set LRL = " + str(LRL)
     #Time interval for BG light
-    Gunayocclightingmodel.Program_Line_18= "If " + TIL
+    Gunayocclightingmodel.Program_Line_19= "If " + TIL
     
     # the third variable:
     Windowmaterial = idf.idfobjects['WindowMaterial:SimpleGlazingSystem'][0]
