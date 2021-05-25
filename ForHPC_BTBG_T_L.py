@@ -147,9 +147,10 @@ def evaluate_l(X):
     #LRL = round(X,5)
     LRL = 0.002
     
+    TIL= "Minute==30 || Minute==60"
     #for time interval(TI)
    
-    #TIS = "Minute==30 || Minute==60"
+    TIS = "Minute==30 || Minute==60"
     #"""
     # time interval for Light BG
     #if X==1:
@@ -157,7 +158,7 @@ def evaluate_l(X):
     #elif X==2:
         #TIL= "Minute==20 || Minute==40 || Minute==60"
     #elif X==3:
-        TIL= "Minute==30 || Minute==60"
+        #TIL= "Minute==30 || Minute==60"
     #elif X==4:
         #TIL= "Minute==60"
     #elif X==5:
